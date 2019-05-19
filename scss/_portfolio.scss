@@ -1,0 +1,134 @@
+/* Courses Area css
+============================================================================================ */
+/* Start Portfolio Area css
+============================================================================================ */
+
+.portfolio_area {
+    @media (max-width: 991px) {
+        padding-bottom: 50px;
+    }
+    .filters {
+        ul {
+            padding-left: 0;
+            margin-bottom: 30px;
+            @media (max-width: 991px) {
+                margin-bottom: 20px;
+            }
+            li {
+                display: inline-block;
+                margin-right: 40px;
+                font-size: 14px;
+                font-weight: 500;
+                text-transform: uppercase;
+  				color: $dip;
+                cursor: pointer;
+                &:hover{
+                	color: $baseColor;
+                }
+                @include transition();
+             
+                @media (max-width: 767px) {
+                    margin-right: 20px;
+                }
+            }
+            li.active{
+            	color: $baseColor;
+            }
+        }
+    }
+}
+
+.single_portfolio {
+    position: relative;
+    margin-bottom: 30px;
+    @media (max-width: 767px) {
+        margin-bottom: 35px;
+    }
+    .short_info {
+    	position: absolute;
+    	bottom: 20px;
+    	left: 20px;
+    	opacity: 0;
+    	visibility: hidden;
+    	transition: all 300ms linear 0s;
+    	background: #fff;
+    	width: 370px;
+    	padding: 20px 37px;
+        @include transition();
+        h4 {
+            text-transform: capitalize;
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            a {
+                color: $dip;
+            }
+        }
+        p {
+            margin-bottom: 0px;
+            text-transform: uppercase;
+            color: $baseColor;
+        }
+    }
+    &:hover {
+        .short_info {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+.portfolio_details_area {}
+
+.portfolio_details_inner {
+    .row {
+        margin-bottom: 35px;
+        @media (max-width: 480px) {
+            margin-bottom: 30px;
+        }
+    }
+    p {
+        margin-bottom: 30px;
+        font-size: 14px;
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+    .portfolio_right_text {
+        padding: 30px;
+        background: #f8faff;
+        margin-top: 10px;
+        h4 {
+            font-size: 20px;
+            text-transform: capitalize !important;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+        .list {
+            li {
+                margin-bottom: 7px;
+                span {
+                    color: #000000;
+                    font-size: 16px;
+                    font-weight: 500;
+                    width: 97px;
+                    display: inline-block;
+                }
+                font-weight: normal;
+                font-size: 14px;
+                &:last-child {
+                    margin-bottom: 0px;
+                }
+                i {
+                    color: #f1cd09;
+                }
+            }
+        }
+    }
+}
+
+/* End Portfolio Area css
+============================================================================================ */

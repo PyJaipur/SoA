@@ -1,0 +1,47 @@
+/* About Area css
+============================================================================================ */
+.about-area{
+	.about-content{
+		padding-left: 110px;
+		@media (min-width: 1199px) and (max-width: 1199px){
+			padding-top: 30px;
+			padding-left: 40px;
+		}
+		@media (max-width: 991px){
+				margin-top: 0;
+				padding-left: 0;
+				h4 br{
+					display: none;
+				}
+				p br{
+					display: none;
+				}
+			
+		}
+		h4{
+			font-size: 30px;
+			color: $dip;
+			font-family: $hebb;
+			margin-bottom: 22px;
+			line-height: 40px;
+		}
+		p{
+			font-size: 15px;
+			font-family: $rob;
+			color: $pfont;
+			margin-bottom: 40px;
+			line-height: 26px;
+		}
+		.main_btn{
+			&:hover{
+				border: 1px solid $baseColor;
+			}
+		}
+	}
+}
+
+@media (max-width: 991px){
+
+}
+
+

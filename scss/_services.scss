@@ -1,0 +1,88 @@
+/* Service  Area css
+============================================================================================ */
+
+.service-area{
+	background: #f7f7f7;
+	.single-service{
+		border: 1px solid transparent;
+		background: #fff;
+		text-align: center;
+		padding: 40px 30px 25px;
+		@include transition;
+		&:hover{
+			border: 1px solid $baseColor;
+		}
+		.service-icon {
+			width: 170px;
+			height: 95px;
+			text-align: center;
+			margin: 0 auto 28px;
+			position: relative;
+			z-index: 1;
+			&:after{
+				content: '';
+				position: absolute;
+				height: 90px;
+				width: 90px;
+				background: #fcefed;
+				border-radius: 100%;
+				left: 27px;
+				z-index: -1;
+				top: 14px;
+			}
+		}
+		.service-content{
+			h5{
+				font-size: 20px;
+				font-weight: 500;
+				color: $dip;
+				margin-bottom: 18px;
+			}
+			p{
+				line-height: 27px;
+			}
+
+		}
+	}
+}
+.service-page.service-area{
+	background: #fff;
+	.single-service{
+		background: $bg_one;
+	}
+
+}
+.area-heading{
+	margin-bottom: 90px;
+	text-align:center;
+	margin-top: 15px;
+	h3{
+		font-size: 30px;
+		color: $dip;
+		position: relative;
+	}
+	p{
+		font-size: 14px;
+		color: $pfont;
+	}
+	.line:after{
+		content: '';
+		position:absolute;
+		width:20px;
+		height: 5px;
+		background: $baseColor;
+		left: 50%;
+		transform: translateX(-50%);
+		top: -16px;
+	}
+	.line:before{
+		content: '';
+		position:absolute;
+		width:100px;
+		height: 1px;
+		background: $baseColor;
+		left: 50%;
+		transform: translateX(-50%);
+		top: -14px;
+	}
+}

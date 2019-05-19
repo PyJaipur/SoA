@@ -1,0 +1,36 @@
+/*font Variables*/
+$rob: 'Roboto', sans-serif;
+$hebb:'Heebo', sans-serif;
+
+
+/*Color Variables*/
+$baseColor: #e22104;
+$baseColorLight: #ec473a;
+$dip: #202e31;
+$pfont: #888888; 
+$white: #fff;
+$bg_one: #f6f6f6;
+$title-color: #2a2a2a;
+ 
+
+
+/*=================== fonts ====================*/
+@import url('https://fonts.googleapis.com/css?family=Heebo:400,500,700|Roboto:300,400,500,700');
+
+// Mixins
+@mixin transition($property: all, $duration: 300ms, $animate: linear, $delay:0s){
+    transition: $property $duration $animate $delay; 
+}
+
+// Placeholder Mixins
+
+@mixin placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+
+
+
+

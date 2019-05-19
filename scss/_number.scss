@@ -1,0 +1,44 @@
+
+/* Clients Logo Area css
+======================================================================= */
+
+.number-area{
+	background: url(../img/background/bg1.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	padding-top: 65px;
+}
+.number-content{
+	padding-top: 60px;
+	h4{
+		font-size: 30px;
+		color: $dip;
+		font-family: $hebb;
+		margin-bottom: 22px;
+		line-height: 40px;
+		text-transform: uppercase;
+	}
+	p{
+		font-size: 15px;
+		font-family: $rob;
+		color: $pfont;
+		margin-bottom: 50px;
+		line-height: 26px;
+	}
+	.number-wrapper{
+		display: flex;
+		.single-number{
+			width: 33.33%;
+			h5{
+				font-size: 27px;
+				color: $baseColorLight;
+			}
+			p{
+				font-size: 16px;
+				color: #888;
+				text-transform: capitalize;
+			}
+		}	
+	}
+}
