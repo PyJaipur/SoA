@@ -4180,7 +4180,8 @@ input[type=submit].btn-block {
     align-items: center;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    padding: .5rem 1rem
+    padding: .5rem 1rem;
+    
 }
 
 .navbar>.container,

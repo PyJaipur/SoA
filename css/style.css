@@ -93,11 +93,12 @@ ul {
     border-radius: 0px; }
     .header_area .navbar .logo_h {
       color: orangered;
-      height: 80px;
+      height: 60px;
       text-align: center;
       line-height: 69px;
       font-size: 30px;
       text-transform: uppercase;
+      vertical-align:middle;
       font-weight: 700; }
     .header_area .navbar .navbar-brand {
       padding-top: 0; }
@@ -358,10 +359,9 @@ ul {
     .home_banner_area .banner_inner .banner_content {
       color: #fff; }
       .home_banner_area .banner_inner .banner_content span {
-        font-size: 24px;
+        font-size: 32px;
         color: #fff;
         font-family: "Heebo", sans-serif;
-        text-transform: uppercase;
         margin-bottom: 24px;
         display: inline-block;
         position: relative; }
@@ -2615,6 +2615,8 @@ h6 {
 ============================================================================================ */
 .main_btn {
   display: inline-block;
+  margin-left: 8px;
+  margin-right: 8px;
   background: #e22104;
   padding: 0px 51px;
   color: #fff;
@@ -3288,3 +3290,123 @@ h6 {
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */
+
+/*==============================================
+			Footer Style					
+==============================================*/
+.tg-footer{border-bottom:2px solid;}
+.tg-contastus{
+	width:100%;
+	float:left;
+	margin:65px 0 0;
+}
+.tg-contastus h1{
+	margin:0;
+	top:-72px;
+	color:#fff;
+	z-index:-1;
+	width:100%;
+	font-size:90px;
+	font-weight:500;
+	line-height:80px;
+	text-align:center;
+	position:absolute;
+	text-shadow: 0 0 30px #e9e9ea;
+}
+.tg-bgcontactus{
+	position:relative;
+	background-image: url(../images/bg-parallax/bg-parallax-03.jpg);
+	-webkit-background-size: 100% auto;
+	-moz-background-size: 100% auto;
+	-ms-background-size: 100% auto;
+	-o-background-size: 100% auto;
+	background-size: 100% auto;
+	-webkit-background-attachment: fixed;
+	-moz-background-attachment: fixed;
+	-ms-background-attachment: fixed;
+	-o-background-attachment: fixed;
+	background-attachment: fixed;
+	background-position:bottom left;
+	background-repeat:no-repeat;
+}
+.tg-bgcontactus:before{
+	top:0;
+	left:0;
+	content:'';
+	width:100%;
+	height:100%;
+	position:absolute;
+	background:
+		-moz-linear-gradient(-45deg,
+		rgba(246,115,13,0.7) 0%,
+		rgba(217,8,69,0.7) 80%);
+	background:
+		-webkit-linear-gradient(-45deg,
+		rgba(246,115,13,0.7) 0%,
+		rgba(217,8,69,0.7) 80%);
+	background:
+		linear-gradient(135deg,
+		rgba(246,115,13,0.7) 0%,
+		rgba(217,8,69,0.7) 80%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3f6730d', endColorstr='#b3d90845',GradientType=1 );
+}
+.tg-contastus .tg-sectionheading span,
+.tg-contastus .tg-sectionheading h2{color:#fff;}
+.tg-contastus .tg-sectionheading:before{background:#fff;}
+.tg-formcontactus{margin:0;}
+.tg-formcontactus fieldset .form-group{
+	width:50%;
+	padding:0 5px;
+}
+.tg-formcontactus fieldset .form-group:nth-child(5){width:100%;}
+.tg-formcontactus fieldset textarea{
+	width:100%;
+	float:left;
+	resize:none;
+	height:140px;
+}
+.tg-formcontactus fieldset .tg-btn{
+	padding:0;
+	width:170px;
+	color:#444349;
+	display:block;
+	margin:0 auto;
+	background:#fff;
+}
+.tg-formcontactus fieldset .tg-btn:before{background:none;}
+.tg-formcontactus fieldset .tg-btn:after{display:none;}
+.tg-footerbar{
+	width:100%;
+	float:left;
+	padding:20px 0;
+	background:#fff;
+	position:relative;
+}
+.tg-btnscrolltop{
+	top:-20px;
+	right:60px;
+	width:40px;
+	height:40px;
+	display:block;
+	color:#444349;
+	font-size:14px;
+	background:#fff;
+	line-height:40px;
+	border-radius:4px;
+	text-align:center;
+	position:absolute;
+	-webkit-box-shadow: 0 0 20px 0 rgba(68,67,73,0.20);
+	box-shadow: 0 0 20px 0 rgba(68,67,73,0.20);
+}
+.tg-copyrights{
+	margin:0;
+	float:left;
+	color:#767676;
+	padding:8px 0;
+	font-size:13px;
+	line-height:13px;
+}
+.tg-footerbar .tg-socialicons{
+	width:auto;
+	float:right;
+}
