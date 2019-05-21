@@ -348,14 +348,19 @@ ul {
     width: 100%;
     min-height: 770px; }
     .home_banner_area .banner_inner .overlay {
-      background: url(../img/banner/home-banner2.jpg) no-repeat scroll center center;
+      background: url(../img/banner/SOA-PyJaipur-02.png) no-repeat scroll center center;
       position: absolute;
       left: 0;
       right: 0;
       top: 0;
       height: 100%;
       bottom: 0;
-      z-index: -1; }
+      z-index: -1; 
+      -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    }
     .home_banner_area .banner_inner .banner_content {
       color: #fff; }
       .home_banner_area .banner_inner .banner_content span {
@@ -395,14 +400,15 @@ ul {
     min-height: 660px;
     z-index: 1; }
     .blog_banner .banner_inner .overlay {
-      background: url(../img/banner/banner-2.jpg) no-repeat scroll center center;
+      background: url(../img/banner/SOA-PyJaipur-02.png) no-repeat scroll center center;
       opacity: .5;
       height: 125%;
       position: absolute;
       left: 0px;
       top: 0px;
       width: 100%;
-      z-index: -1; }
+      z-index: -1; 
+    }
     .blog_banner .banner_inner .blog_b_text {
       max-width: 700px;
       margin: auto;
