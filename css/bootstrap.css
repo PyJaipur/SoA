@@ -628,6 +628,11 @@ pre code {
     margin-left: -15px
 }
 
+#footerid
+{
+    margin-left: 420px;
+}
+
 .no-gutters {
     margin-right: 0;
     margin-left: 0
