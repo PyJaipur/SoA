@@ -1,122 +1,305 @@
-(function(){
-	// FAQ Template - by CodyHouse.co
-  var FaqTemplate = function(element) {
-		this.element = element;
-		this.sections = this.element.getElementsByClassName('cd-faq__group');
-		this.triggers = this.element.getElementsByClassName('cd-faq__trigger');
-		this.faqContainer = this.element.getElementsByClassName('cd-faq__items')[0];
-		this.faqsCategoriesContainer = this.element.getElementsByClassName('cd-faq__categories')[0];
-		this.faqsCategories = this.faqsCategoriesContainer.getElementsByClassName('cd-faq__category');
-  	this.faqOverlay = this.element.getElementsByClassName('cd-faq__overlay')[0];
-  	this.faqClose = this.element.getElementsByClassName('cd-faq__close-panel')[0];
-  	this.scrolling = false;
-  	initFaqEvents(this);
-  };
+$(document).ready(function() {
 
-  function initFaqEvents(faqs) {
-  	// click on a faq category
-		faqs.faqsCategoriesContainer.addEventListener('click', function(event){
-			var category = event.target.closest('.cd-faq__category');
-			if(!category) return;
-			var mq = getMq(faqs),
-				selectedCategory = category.getAttribute('href').replace('#', '');
-			if(mq == 'mobile') { // on mobile, open faq panel
-				event.preventDefault();
-				faqs.faqContainer.scrollTop = 0;
-				Util.addClass(faqs.faqContainer, 'cd-faq__items--slide-in');
-				Util.addClass(faqs.faqClose, 'cd-faq__close-panel--move-left');
-				Util.addClass(faqs.faqOverlay, 'cd-faq__overlay--is-visible');
-				var selectedSection = faqs.faqContainer.getElementsByClassName('cd-faq__group--selected');
-				if(selectedSection.length > 0) {
-					Util.removeClass(selectedSection[0], 'cd-faq__group--selected');
-				}
-				Util.addClass(document.getElementById(selectedCategory), 'cd-faq__group--selected');
-			} else { // on desktop, scroll to section
-				if(!window.requestAnimationFrame) return;
-				event.preventDefault();
-				var windowScrollTop = window.scrollY || document.documentElement.scrollTop;
-				Util.scrollTo(document.getElementById(selectedCategory).getBoundingClientRect().top + windowScrollTop + 2, 200);
-			}
-		});
+    "use strict";
 
-		// on mobile -> close faq panel
-		faqs.faqOverlay.addEventListener('click', function(event){
-			closeFaqPanel(faqs);
-		});
-		faqs.faqClose.addEventListener('click', function(event){
-			event.preventDefault();
-			closeFaqPanel(faqs);
-		});
+    //Page loader
+    if ($('.pageloader').length) {
 
-		// on desktop -> toggle faq content visibility when clicking on the trigger element
-		faqs.faqContainer.addEventListener('click', function(event){
-			if(getMq(faqs) != 'desktop') return;
-			var trigger = event.target.closest('.cd-faq__trigger');
-			if(!trigger) return;
-			event.preventDefault();
-			var content = trigger.nextElementSibling,
-				parent = trigger.closest('li'),
-				bool = Util.hasClass(parent, 'cd-faq__item-visible');
+        $('.pageloader').toggleClass('is-active');
 
-			Util.toggleClass(parent, 'cd-faq__item-visible', !bool);
+        $(window).on('load', function() {
+            var pageloaderTimeout = setTimeout( function() {
+                $('.pageloader').toggleClass('is-active');
+                $('.infraloader').toggleClass('is-active')
+                clearTimeout( pageloaderTimeout );
+            }, 700 );
+        })
+    }
 
-			//store initial and final height - animate faq content height
-			Util.addClass(content, 'cd-faq__content--visible');
-			var initHeight = bool ? content.offsetHeight: 0,
-				finalHeight = bool ? 0 : content.offsetHeight;
-			
-			if(window.requestAnimationFrame) {
-				Util.setHeight(initHeight, finalHeight, content, 200, function(){
-					heighAnimationCb(content, bool);
-				});
-			} else {
-				heighAnimationCb(content, bool);
-			}
-		});
-		
-		if(window.requestAnimationFrame) {
-			// on scroll -> update selected category
-			window.addEventListener('scroll', function(){
-				if(getMq(faqs) != 'desktop' || faqs.scrolling) return;
-				faqs.scrolling = true;
-				window.requestAnimationFrame(updateCategory.bind(faqs)); 
-			});
-		}
-  };
+    //Navbar Clone
+    if ($('#navbar-clone').length) {
+        $(window).scroll(function() {    // this will work when your window scrolled.
+            var height = $(window).scrollTop();  //getting the scrolling height of window
+            if(height  > 50) {
+                $("#navbar-clone").addClass('is-active');
+            } else{
+                $("#navbar-clone").removeClass('is-active');
+            }
+        });
+    }
 
-  function closeFaqPanel(faqs) {
-  	Util.removeClass(faqs.faqContainer, 'cd-faq__items--slide-in');
-  	Util.removeClass(faqs.faqClose, 'cd-faq__close-panel--move-left');
-  	Util.removeClass(faqs.faqOverlay, 'cd-faq__overlay--is-visible');
-  };
+    //Mobile menu toggle
+    if ($('.navbar-burger').length) {
+        $('.navbar-burger').on("click", function(){
 
-  function getMq(faqs) {
-		//get MQ value ('desktop' or 'mobile') 
-		return window.getComputedStyle(faqs.element, '::before').getPropertyValue('content').replace(/'|"/g, "");
-  };
+            var menu_id = $(this).attr('data-target');
+            $(this).toggleClass('is-active');
+            $("#"+menu_id).toggleClass('is-active');
+            $('.navbar.is-light').toggleClass('is-dark-mobile')
 
-  function updateCategory() { // update selected category -> show green rectangle to the left of the category
-  	var selected = false;
-		for(var i = 0; i < this.sections.length; i++) {
-			var top = this.sections[i].getBoundingClientRect().top,
-				bool = (top <= 0) && (-1*top < this.sections[i].offsetHeight);
-			Util.toggleClass(this.faqsCategories[i], 'cd-faq__category-selected', bool);
-			if(bool) selected = true;
-		}
-		if(!selected) Util.addClass(this.faqsCategories[0], 'cd-faq__category-selected');
-		this.scrolling = false;
-  };
+            /*if ($('.navbar-menu').hasClass('is-active')) {
+                $('.navbar-menu').removeClass('is-active');
+                $('.navbar').removeClass('is-dark-mobile');
+            } else {
+                $('.navbar-menu').addClass('is-active');
+                $('.navbar').addClass('is-dark-mobile');
+            }*/
+        });
+    }
 
-  function heighAnimationCb(content, bool) {
-		content.removeAttribute("style");
-		if(bool) Util.removeClass(content, 'cd-faq__content--visible');
-  };
+    //Highlight current page navbar menu item
+    if ($('.navbar').length) {
+        // Get current page URL
+        var url = window.location.href;
 
-  var faqTemplate = document.getElementsByClassName('js-cd-faq'),
-  	faqArray = [];
-  if(faqTemplate.length > 0) {
-		for(var i = 0; i < faqTemplate.length; i++) {
-			faqArray.push(new FaqTemplate(faqTemplate[i])); 
-		}
-  };
-})();
+        // remove # from URL
+        url = url.substring(0, (url.indexOf("#") == -1) ? url.length : url.indexOf("#"));
+
+        // remove parameters from URL
+        url = url.substring(0, (url.indexOf("?") == -1) ? url.length : url.indexOf("?"));
+
+        // select file name
+        url = url.substr(url.lastIndexOf("/") + 1);
+
+        // If file name not available
+        if(url == ''){
+            url = 'index.html';
+        }
+
+        // Loop all menu items
+        $('.navbar .navbar-item a').each(function(){
+
+            // select href
+            var href = $(this).attr('href');
+
+            // Check filename
+            if(url == href){
+
+                // Add active class
+                $(this).addClass('is-active');
+            }
+        });
+    }
+
+    //Pop Dropdowns
+    $('.dropdown-trigger').on('click', function(event) {
+        event.stopPropagation();
+        $('.dropdown').removeClass('is-active');
+        $(this).closest('.dropdown').addClass('is-active');
+    })
+    //Close pop dropdowns on click outside
+    $(window).on('click', function(event) {
+        //if(!$(event.target).find('.dropdown-menu').length) {
+        if($('.dropdown').hasClass('is-active')) {
+            $('.dropdown').removeClass('is-active');
+        }
+        //}
+    });
+
+    //Navigation Tabs
+    $('.flying-tabs .flying-child').on('click', function() {
+        var tab_id = $(this).attr('data-tab');
+
+        $(this).siblings('.flying-child').removeClass('is-active');
+        $(this).closest('.flying-wrapper').find('.flying-tabs-content').children('.tab-content').removeClass('is-active');
+
+        $(this).addClass('is-active');
+        $("#"+tab_id).addClass('is-active');
+    })
+
+    //Modal video
+
+    new ModalVideo('.js-modal-btn', {
+        channel: 'youtube',
+        autoplay: 1
+    });
+
+    //Icons
+    feather.replace();
+
+    //Fix for portrait tabs flex display
+    if (window.matchMedia('(min-width: 768px)').matches) {
+        $('.tab-content-wrapper').addClass('is-flex-mobile');
+    } else {
+        $('.tab-content-wrapper').removeClass('is-flex-mobile');
+    }
+
+    $(window).on('resize', function() {
+        if (window.matchMedia('(min-width: 768px)').matches) {
+            $('.tab-content-wrapper').addClass('is-flex-mobile');
+        } else {
+            $('.tab-content-wrapper').removeClass('is-flex-mobile');
+        }
+    })
+
+    //Aos
+    AOS.init();
+
+    //Documentation languages toggle
+    if ($('.token-documentation').length) {
+        $('.token-documentation ul li').on('click', function(){
+            $('.token-documentation ul li.is-active').removeClass('is-active');
+            $(this).addClass('is-active');
+        })
+    }
+
+    //Anchor scroll
+    $('a[href*="#"]')
+    // Remove links that don't actually link to anything
+        .not('[href="#"]')
+        .not('[href="#0"]')
+        .on('click', function(event) {
+        // On-page links
+        if (
+            location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+            &&
+            location.hostname == this.hostname
+        ) {
+            // Figure out element to scroll to
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+            // Does a scroll target exist?
+            if (target.length) {
+                // Only prevent default if animation is actually gonna happen
+                event.preventDefault();
+                $('html, body').animate({
+                    scrollTop: target.offset().top
+                }, 550, function() {
+                    // Callback after animation
+                    // Must change focus!
+                    var $target = $(target);
+                    $target.focus();
+                    if ($target.is(":focus")) { // Checking if the target was focused
+                        return false;
+                    } else {
+                        $target.attr('tabindex','-1'); // Adding tabindex for elements not focusable
+                        $target.focus(); // Set focus again
+                    };
+                });
+            }
+        }
+    });
+
+    $('.like-button').on('click', function(){
+        $(this).toggleClass('is-active');
+        $('.like-button svg').toggleClass('gelatine');
+    })
+
+    /* ---- particles.js config ---- */
+
+    if($('#particles-js'). length) {
+
+        particlesJS("particles-js", {
+          "particles": {
+            "number": {
+              "value": 47,
+              "density": {
+                "enable": true,
+                "value_area": 800
+              }
+            },
+            "color": {
+              "value": "#5507fc"
+            },
+            "shape": {
+              "type": "circle",
+              "stroke": {
+                "width": 0,
+                "color": "#000000"
+              },
+              "polygon": {
+                "nb_sides": 5
+              },
+              "image": {
+                "src": "img/github.svg",
+                "width": 100,
+                "height": 100
+              }
+            },
+            "opacity": {
+              "value": 0.5211089197812949,
+              "random": true,
+              "anim": {
+                "enable": false,
+                "speed": 1,
+                "opacity_min": 0.1,
+                "sync": false
+              }
+            },
+            "size": {
+              "value": 8.017060304327615,
+              "random": true,
+              "anim": {
+                "enable": false,
+                "speed": 40,
+                "size_min": 0.1,
+                "sync": false
+              }
+            },
+            "line_linked": {
+              "enable": false,
+              "distance": 500,
+              "color": "#ffffff",
+              "opacity": 0.4,
+              "width": 2
+            },
+            "move": {
+              "enable": true,
+              "speed": 3.206824121731046,
+              "direction": "none",
+              "random": true,
+              "straight": false,
+              "out_mode": "out",
+              "bounce": false,
+              "attract": {
+                "enable": false,
+                "rotateX": 600,
+                "rotateY": 1200
+              }
+            }
+          },
+          "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+              "onhover": {
+                "enable": true,
+                "mode": "repulse"
+              },
+              "onclick": {
+                "enable": true,
+                "mode": "bubble"
+              },
+              "resize": true
+            },
+            "modes": {
+              "grab": {
+                "distance": 400,
+                "line_linked": {
+                  "opacity": 0.5
+                }
+              },
+              "bubble": {
+                "distance": 400,
+                "size": 4,
+                "duration": 0.3,
+                "opacity": 1,
+                "speed": 3
+              },
+              "repulse": {
+                "distance": 200,
+                "duration": 0.4
+              },
+              "push": {
+                "particles_nb": 4
+              },
+              "remove": {
+                "particles_nb": 2
+              }
+            }
+          },
+          "retina_detect": true
+        });
+
+    }
+
+})
