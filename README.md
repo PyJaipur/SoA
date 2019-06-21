@@ -24,6 +24,6 @@ In this event, there will be mentors guiding 5 mentees under them to solve, lear
 
 Topics in specified order as well as resources will be provided to the mentees.
 
-Link to Mentor form : https://forms.gle/oM9iLk23yZ1cSQWb9
+Link to Mentor form : https://forms.gle/X2o6HXg7Naa2Xr3g9
 
-Link to Mentee form : https://forms.gle/VZ4h1sqTAibBLUpF7 
+Link to Mentee form : https://forms.gle/MLYSm5apRXaX1Z4n9
