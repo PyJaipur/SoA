@@ -1,10 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="w-full lg:w-4/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
-  <div class="font-sans">
-     <span class="text-base text-purple-500 font-bold">&laquo;</span> <a href="{{ previous_page }}" class="text-base md:text-sm text-purple-500 font-bold no-underline hover:underline">Back Link</a>
-     <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">{{ page_title }}</h1>
-     <hr class="border-b border-gray-400">
-  </div>
+<div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+   <div class="w-full lg:w-2/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
+      <form class="bg-white border border-gray 400 border-rounded px-8 pt-6 pb-8 mb-4">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+            Email
+          </label>
+          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="google@gmail.com">
+        </div>
+        <div class="flex items-center justify-between">
+          <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+            Send me a login link
+          </button>
+        </div>
+      </form>
+   </div>
+   <div class="w-full lg:w-3/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
+      <!--Title-->
+      <div class="font-sans">
+         <h1 class="font-sans break-normal text-gray-900 pt-6 pb-2 text-xl">What is Summer of Algorithms?</h1>
+         <hr class="border-b border-gray-400">
+      </div>
+      <!--Lead Para-->
+      <p class="py-6">
+      Summers usually come with lots of free time. Summer of Algorithms (SoA) is a place where you can pick up new skills free of cost. The program is run every year by the <a class="text-purple-500 no-underline hover:underline" href="https://www.pyjaipur.org">PyJaipur community</a>.
+      </p>
+      <p class="py-6"> The way this works is simple: </p>
+      <ol class='list-disc'>
+        <li >First you select one of the available skill tracks. For each skill there is a sequence of tasks which need to be completed.</li>
+        <li >You then read and understand the concept that the task is trying to convey.</li>
+        <li >You complete the exercises for the task.</li>
+      </ol>
+      <p class='py6'>That's it!</p>
+   </div>
 </div>
 {% endblock %}

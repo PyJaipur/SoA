@@ -12,6 +12,7 @@ Base = declarative_base()
 class AnonUser:
     id = username = email = None
     permissions = []
+    is_anon = True
 
 
 class User(Base):
@@ -20,6 +21,8 @@ class User(Base):
     username = Column(String)
     email = Column(String)
     permissions = Column(JSON)
+    # ---------------
+    is_anon = False
 
 
 class Group(Base):

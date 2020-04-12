@@ -27,7 +27,11 @@
                <div class="flex-1 w-full mx-auto max-w-sm content-center py-4 lg:py-0"></div>
                <ul class="list-reset lg:flex justify-end items-center">
                   <li class="mr-3 py-2 lg:py-0">
-                     <a class="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="/logout">Logout</a>
+                     {% if not current_user.is_anon %}
+                       <a class="inline-block py-2 px-4 text-gray-400 no-underline" href="#"> Logout </a>
+                     {% else %}
+                       <a class="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="/logout"> Logout </a>
+                     {% endif %}
                   </li>
                </ul>
             </div>
