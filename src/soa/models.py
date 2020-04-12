@@ -9,6 +9,11 @@ engine = create_engine(database_url)
 Base = declarative_base()
 
 
+class AnonUser:
+    id = username = email = None
+    permissions = []
+
+
 class User(Base):
     __tablename__ = "user"
     id = Column(Integer, primary_key=True)

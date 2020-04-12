@@ -5,10 +5,16 @@ from soa.models import Session
 import redis
 
 redis = redis.Redis(host=redis_host, port=6379, db=0)
-tempate = bottle.jinja2_template
+
+
+def render(template_name, **kwargs):
+    kwargs.update({"current_user": bottle.request.user, "request": bottle.request})
+    return bottle.jinja2_template(template_name, **kwargs)
+
+
 app = bottle.Bottle()
 
 
 @app.get("/")
 def home():
-    return template("base.html")
+    return render("base.html")
