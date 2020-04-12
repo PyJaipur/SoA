@@ -1,29 +1,17 @@
-# [Summer of Algorithm](https://pyjaipur.github.io/Summer-of-Algorithm/)
+# [Summer of Algorithms](https://soa.pyjaipur.org)
  
-Official website of Summer of Algorithm - Python Jaipur User Group.
+## What is it?
 
-## Contributing
+PyJaipur "Summer of Algorithms" is a 2 month long program which is usually conducted in the month of July-August.
+The aim is to have a place where all our community memebers can learn something new in these 2 months.
+
+## How do I contribute?
 
 There are multiple ways you can contibute to this website.
 
+- Report bugs please!.
 - Add missing documentation.
 - Add/improve design and asthetics of website.
-- Report bugs.
-- Request/Ask/Submit new features.
-- Use github's pull-request/[issues](https://github.com/PyJaipur/Summer-of-Algorithm/issues) feature, or our [mailing-list](https://mail.python.org/mm3/mailman3/lists/pyjaipur.python.org/), whichever works the best.
+- Request/Ask/Submit new features using github's [issues](https://github.com/PyJaipur/Summer-of-Algorithm/issues).
 
-## About Summer of Algorithm
 
-PyJaipur “Summer of Algorithm” is a 2 month long Summer of doing program to be conducted in the month of July-August. Through this program, we aim to bring beginners under the guidance of highly skilled people in technology to work, learn and gain knowledge together.
-
-There are two divisions of participation : 
-  * Data Structures and Algorithms
-  * Machine Learning
-  
-In this event, there will be mentors guiding 5 mentees under them to solve, learn, improvise algorithms in DS/ML and prepare for competition/test that'll held every 15 days i.e 4 test in a 2 months event . 
-
-Topics in specified order as well as resources will be provided to the mentees.
-
-Link to Mentor form : https://forms.gle/X2o6HXg7Naa2Xr3g9
-
-Link to Mentee form : https://forms.gle/MLYSm5apRXaX1Z4n9
