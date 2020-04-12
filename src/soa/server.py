@@ -1,21 +1,19 @@
 import bottle
 from soa.settings import redis_host
 from bottle_tools import fill_args
-from soa import models
+from soa import models, plugins
 import redis
 
 redis = redis.Redis(host=redis_host, port=6379, db=0)
 
 
 def render(template_name, **kwargs):
-    current_user = models.AnonUser()
-    if hasattr(bottle.request, "user"):
-        current_user = bottle.request.user
-    kwargs.update({"current_user": current_user, "request": bottle.request})
+    kwargs.update({"request": bottle.request})
     return bottle.jinja2_template(template_name, **kwargs)
 
 
 app = bottle.Bottle()
+plugins.install_all(app)
 
 
 @app.get("/")
