@@ -27,7 +27,7 @@
                <div class="flex-1 w-full mx-auto max-w-sm content-center py-4 lg:py-0"></div>
                <ul class="list-reset lg:flex justify-end items-center">
                   <li class="mr-3 py-2 lg:py-0">
-                     {% if not current_user.is_anon %}
+                     {% if request.user.is_anon %}
                        <a class="inline-block py-2 px-4 text-gray-400 no-underline" href="#"> Logout </a>
                      {% else %}
                        <a class="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="/logout"> Logout </a>
@@ -69,18 +69,20 @@
          	}
            }
            
-           //Help Menu
-           if (!checkParent(target, helpMenuDiv)) {
-         	// click NOT on the menu
-         	if (checkParent(target, helpMenu)) {
-         	  // click on the link
-         	  if (helpMenuDiv.classList.contains("hidden")) {
-         		helpMenuDiv.classList.remove("hidden");
-         	  } else {helpMenuDiv.classList.add("hidden");}
-         	} else {
-         	  // click both outside link and outside menu, hide menu
-         	  helpMenuDiv.classList.add("hidden");
-         	}
+           if (helpMenuDiv !== null){
+             //Help Menu
+             if (!checkParent(target, helpMenuDiv)) {
+            // click NOT on the menu
+            if (checkParent(target, helpMenu)) {
+              // click on the link
+              if (helpMenuDiv.classList.contains("hidden")) {
+              helpMenuDiv.classList.remove("hidden");
+              } else {helpMenuDiv.classList.add("hidden");}
+            } else {
+              // click both outside link and outside menu, hide menu
+              helpMenuDiv.classList.add("hidden");
+            }
+             }
            }
            
          }

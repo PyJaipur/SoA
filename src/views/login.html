@@ -2,17 +2,22 @@
 {% block content %}
 <div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
    <div class="w-full lg:w-2/5 p-8 mt-6 lg:mt-0 text-gray-900 leading-normal bg-white border border-gray-400 border-rounded">
-      <form class="bg-white border border-gray 400 border-rounded px-8 pt-6 pb-8 mb-4">
+      <form class="bg-white border border-gray 400 border-rounded px-8 pt-6 pb-8 mb-4" action='/login' method='POST'>
         <div class="mb-4">
           <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
             Email
           </label>
-          <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" placeholder="google@gmail.com">
+          <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="email"
+          type="text"
+          placeholder="google@gmail.com"
+          name='email'>
         </div>
         <div class="flex items-center justify-between">
-          <button class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-            Send me a login link
-          </button>
+          <input class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                 type="submit"
+                                                                                                                                             value='Send me a login link'>
         </div>
       </form>
    </div>
