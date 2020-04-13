@@ -43,7 +43,7 @@ def login_post(email: str, LoginToken, User):
     )
     token = LoginToken.loop_create(bottle.request.session, user=u)
     mailer.send_otp(email, token.otp)
-    return render("login.html", otp_sent=True)
+    return bottle.redirect(app.get_url("get_login", otp_sent=True))
 
 
 @app.get("/otp", skip=["login_required"], name="otp")
