@@ -2,9 +2,6 @@ import bottle
 import requests
 from bottle_tools import fill_args
 from soa import models, plugins, mailer, settings
-import redis
-
-redis = redis.Redis(host=settings.redis_host, port=6379, db=0)
 
 
 def render(template_name, **kwargs):
@@ -33,6 +30,7 @@ def login():
 
 
 @app.post("/login", skip=["login_required"])
+@plugins.limit_per_day("login", n=300)
 @fill_args
 def login_post(email: str, LoginToken, User):
     u = models.get_or_create(
