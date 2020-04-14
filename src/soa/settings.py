@@ -1,6 +1,11 @@
 import os
 
-env = os.environ.get
+
+def env(key, default=None):
+    val = os.environ.get(key, default)
+    print(f"{key:<30}:{val}")
+    return val
+
 
 base_domain = env("BASE_DOMAIN")
 # From ENV

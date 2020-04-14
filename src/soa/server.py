@@ -30,7 +30,7 @@ def login():
 
 
 @app.post("/login", skip=["login_required"])
-@plugins.limit_per_day("login", n=300)
+@plugins.per_day_limit("login", n=300)
 @fill_args
 def login_post(email: str, LoginToken, User):
     u = models.get_or_create(

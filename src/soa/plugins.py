@@ -17,7 +17,7 @@ def per_day_limit(name, n):
             if current is not None and current > n:
                 raise bottle.abort(429, "Please retry later")
             else:
-                with R.Pipeline() as pipe:
+                with R.pipeline() as pipe:
                     pipe.incr(keyname)
                     pipe.expire(keyname, 24 * 60 * 60)
                     pipe.execute()
