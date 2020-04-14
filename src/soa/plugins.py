@@ -4,7 +4,7 @@ from datetime import datetime
 from soa import models, settings
 from functools import wraps
 
-redis = redis.Redis(host=settings.redis_host, port=6379, db=0)
+R = redis.from_url(settings.redis_url)
 
 
 def per_day_limit(name, n):
@@ -13,11 +13,11 @@ def per_day_limit(name, n):
         def wrapper(*a, **kw):
             ts = datetime.utcnow().strftime("%Y.%m.%d")
             keyname = name + ":" + ts
-            current = redis.get(keyname)
+            current = R.get(keyname)
             if current is not None and current > n:
                 raise bottle.abort(429, "Please retry later")
             else:
-                with redis.Pipeline() as pipe:
+                with R.Pipeline() as pipe:
                     pipe.incr(keyname)
                     pipe.expire(keyname, 24 * 60 * 60)
                     pipe.execute()

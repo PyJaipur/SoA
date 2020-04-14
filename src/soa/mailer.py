@@ -7,25 +7,22 @@ log = logging.getLogger("main")
 
 
 def send(*, to, subject, message):
-    gmail_sender = "pyjaipur.india@gmail.com"
-    gmail_passwd = settings.gmail_app_pwd
-
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.ehlo()
     server.starttls()
-    server.login(gmail_sender, gmail_passwd)
+    server.login(settings.gmail_email, settings.gmail_app_pwd)
 
     body = "\r\n".join(
         [
             "To: %s" % to,
-            "From: PyJaipur <%s>" % gmail_sender,
+            "From: PyJaipur <%s>" % settings.gmail_email,
             "Subject: %s" % subject,
             "",
             message,
         ]
     )
     try:
-        server.sendmail(gmail_sender, [to], body)
+        server.sendmail(settings.gmail_email, [to], body)
     except Exception as e:
         log.exception(e)
     server.quit()
