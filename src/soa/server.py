@@ -77,9 +77,17 @@ def logout():
 
 @app.get("/dashboard", name="dashboard")
 def dashboard():
-    return render("dashboard.html")
+    return render("dashboard.html", page_title="Dashboard")
 
 
-@app.get("/account")
+@app.get("/account", name="get_account")
 def profile():
-    return render("account.html")
+    return render("account.html", page_title="Account")
+
+
+@app.post("/account")
+@fill_args
+def profile(username, User):
+    bottle.request.user.username = username
+    bottle.request.session.commit()
+    return bottle.redirect(app.get_url("get_account"))

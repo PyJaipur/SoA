@@ -3,99 +3,26 @@
    <head>
        {% include 'meta.html' %}
       <title>SoA</title>
-      <link href="https://unpkg.com/tailwindcss@next/dist/tailwind.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
       <style>
          @import url('https://fonts.googleapis.com/css?family=Lato');
          html { font-family: 'Lato', sans-serif; }
       </style>
    </head>
-   <body class="bg-gray-100 tracking-wider tracking-normal">
-      <nav id="header" class="fixed w-full z-10 top-0 bg-white border-b border-gray-400">
-         <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-4">
-            <div class="pl-4 flex items-center">
-               <a class="text-gray-900 text-base no-underline hover:no-underline font-extrabold text-xl"  href="/">Summer of Algorithms</a>
-            </div>
-            <div class="block lg:hidden pr-4">
-               <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-purple-500 appearance-none focus:outline-none">
-                  <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                     <title>Menu</title>
-                     <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-                  </svg>
-               </button>
-            </div>
-            <div class="w-full flex-grow lg:flex  lg:content-center lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 z-20" id="nav-content">
-               <div class="flex-1 w-full mx-auto max-w-sm content-center py-4 lg:py-0"></div>
-               <ul class="list-reset lg:flex justify-end items-center">
-                  <li class="mr-3 py-2 lg:py-0">
-                     {% if request.user.is_anon %}
-                       <a class="inline-block py-2 px-4 text-gray-400 no-underline" href="#"> Logout </a>
-                     {% else %}
-                       <a class="inline-block py-2 px-4 text-gray-900 font-bold no-underline" href="/logout"> Logout </a>
-                     {% endif %}
-                  </li>
-               </ul>
-            </div>
-         </div>
-      </nav>
-      {% block content %}
-      {% endblock %}
-      <script>
-         /*Toggle dropdown list*/
-         /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
-         
-         var navMenuDiv = document.getElementById("nav-content");
-         var navMenu = document.getElementById("nav-toggle");
-         
-         var helpMenuDiv = document.getElementById("menu-content");
-         var helpMenu = document.getElementById("menu-toggle");
-         
-         document.onclick = check;
-         
-         function check(e){
-           var target = (e && e.target) || (event && event.srcElement);
-         
-          
-           //Nav Menu
-           if (!checkParent(target, navMenuDiv)) {
-         	// click NOT on the menu
-         	if (checkParent(target, navMenu)) {
-         	  // click on the link
-         	  if (navMenuDiv.classList.contains("hidden")) {
-         		navMenuDiv.classList.remove("hidden");
-         	  } else {navMenuDiv.classList.add("hidden");}
-         	} else {
-         	  // click both outside link and outside menu, hide menu
-         	  navMenuDiv.classList.add("hidden");
-         	}
-           }
-           
-           if (helpMenuDiv !== null){
-             //Help Menu
-             if (!checkParent(target, helpMenuDiv)) {
-            // click NOT on the menu
-            if (checkParent(target, helpMenu)) {
-              // click on the link
-              if (helpMenuDiv.classList.contains("hidden")) {
-              helpMenuDiv.classList.remove("hidden");
-              } else {helpMenuDiv.classList.add("hidden");}
-            } else {
-              // click both outside link and outside menu, hide menu
-              helpMenuDiv.classList.add("hidden");
-            }
-             }
-           }
-           
-         }
-         
-         function checkParent(t, elm) {
-           while(t.parentNode) {
-         	if( t == elm ) {return true;}
-         	t = t.parentNode;
-           }
-           return false;
-         }
-         
-         
-      </script>
+   <body>
+     {% if not page_title %}
+     <h1>Summer of Algorithms</h1>
+     {% else %}
+     <h1>SoA | {{ page_title }}</h1>
+     {% endif %}
+     {% if not request.user.is_anon %}
+     {{ request.user.username }} |
+     <a href='/account'>Account</a> |
+     <a href='/dashboard'>Dashboard</a> |
+     <a href='/logout'>Logout</a>
+     {% endif %}
+     <hr>
+     {% block content %}
+     {% endblock %}
    </body>
 </html>
