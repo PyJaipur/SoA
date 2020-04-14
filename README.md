@@ -19,13 +19,13 @@ There are multiple ways you can contibute to this website.
 1. Git clone this repo
 2. Make sure you have docker running on your machine.
 3. Make sure you have python poetry running on your machine.
-4. Edit `soa/.dev.env` to with correct credentials.
+4. Edit `soa/.dev.env` with correct credentials.
 
 ```bash
 cd soa
 poetry install # Install dependencies
 poetry shell   # Activate virtualenv
-make database  # Start database
-make redis     # Start redis server
+make services  # Start postgres + redis
 make web       # Start webserver
+make stop      # stop services
 ```
