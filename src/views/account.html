@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container w-full flex flex-wrap mx-auto px-2 pt-8 lg:pt-16 mt-16">
+   <div class="w-full lg:w-1/5 lg:px-6 text-xl text-gray-800 leading-normal">
+     <h2>Public</h2>
+     <table class='table-auto'>
+       <tbody>
+         <tr>
+           <td>Name</td>
+           <td>{{ request.user.username }}</td>
+         </tr>
+         <tr>
+           <td>UID</td>
+           <td>{{ request.user.email_hash }}</td>
+         </tr>
+       </tbody>
+     </table>
+     <h2>Private</h2>
+     <table class='table-auto'>
+       <tbody>
+         <tr>
+           <td>Email</td>
+           <td>{{ request.user.email }}</td>
+         </tr>
+       </tbody>
+     </table>
+   </div>
+</div>
+{% endblock %}

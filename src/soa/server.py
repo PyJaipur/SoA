@@ -39,6 +39,7 @@ def login_post(email: str, LoginToken, User):
         defaults={"email": email, "username": "?", "permissions": []},
         email=email,
     )
+    u.ensure_email_hash(bottle.request.session)
     token = LoginToken.loop_create(bottle.request.session, user=u)
     mailer.send_otp(email, token.otp)
     return bottle.redirect(app.get_url("get_login", otp_sent=True))
@@ -77,3 +78,8 @@ def logout():
 @app.get("/dashboard", name="dashboard")
 def dashboard():
     return render("dashboard.html")
+
+
+@app.get("/account")
+def profile():
+    return render("account.html")

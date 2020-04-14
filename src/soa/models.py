@@ -1,3 +1,4 @@
+import hashlib
 from sqlalchemy import (
     create_engine,
     Column,
@@ -39,6 +40,13 @@ class User(Base):
     email = Column(String, unique=True)
     username = Column(String)
     permissions = Column(JSON)
+    email_hash = Column(String)
+
+    def ensure_email_hash(self, session):
+        if self.email_hash is None:
+            self.email_hash = hashlib.sha256(self.email.encode()).hexdigest()
+            session.commit()
+
     # ---------------
     is_anon = False
 

@@ -13,7 +13,8 @@ def per_day_limit(name, n):
         def wrapper(*a, **kw):
             ts = datetime.utcnow().strftime("%Y.%m.%d")
             keyname = name + ":" + ts
-            current = int(R.get(keyname).decode())
+            current = R.get(keyname)
+            current = int(current.decode()) if current is not None else 0
             if current is not None and current > n:
                 raise bottle.abort(429, "Please retry later")
             else:
