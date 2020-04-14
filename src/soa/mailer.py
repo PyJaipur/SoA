@@ -4,13 +4,15 @@ import smtplib
 from textwrap import dedent
 import json
 
-log = logging.getLogger("main")
+log = logging.getLogger("soa")
 
 
 def send(*, to, subject, message):
     if settings.is_dev:
-        log.info(
-            json.dumps({"to": to, "subject": subject, "message": message}, indent=2)
+        log.debug(
+            json.dumps(
+                {"to": to, "subject": subject, "message": message.split("\n")}, indent=2
+            )
         )
         return
     server = smtplib.SMTP("smtp.gmail.com", 587)
