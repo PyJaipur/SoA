@@ -99,6 +99,25 @@ class Event(Base):
     end = Column(DateTime(timezone=True))
 
 
+class Track(Base):
+    __tablename__ = "track"
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    link = Column(String)
+
+    tasks = relationship("Task", back_populates="track")
+
+
+class Task(Base):
+    __tablename__ = "task"
+    id = Column(Integer, primary_key=True)
+    track_id = Column(Integer, ForeignKey("track.id"))
+    title = Column(String)
+    template_name = Column(String)
+
+    track = relationship("Track", back_populates="tasks")
+
+
 Base.metadata.create_all(engine)
-bt.common_kwargs.update({"User": User, "LoginToken": LoginToken})
+bt.common_kwargs.update({"User": User, "LoginToken": LoginToken, "Task": Task})
 Session = sessionmaker(engine)

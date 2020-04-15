@@ -94,3 +94,15 @@ class LoginRequired(Plugin):
             return callback(*a, **kw)
 
         return wrapper
+
+
+class AutoCrumbs(Plugin):
+    name = "auto_crumbs"
+
+    def apply(self, callback, route):
+        @wraps(callback)
+        def wrapper(*a, **kw):
+            bottle.request.crumbs = []
+            return callback(*a, **kw)
+
+        return wrapper

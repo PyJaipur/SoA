@@ -6,6 +6,7 @@ from soa import models, plugins, mailer, settings
 
 
 Alert = namedtuple("Alert", "title message")
+Crumb = namedtuple("Crumb", "text link")
 
 
 def alert(msg, *, title=None):
@@ -23,7 +24,12 @@ def render(template_name, **kwargs):
 
 
 app = bottle.Bottle()
-for plugin in [plugins.AutoSession, plugins.CurrentUser, plugins.LoginRequired]:
+for plugin in [
+    plugins.AutoSession,
+    plugins.CurrentUser,
+    plugins.LoginRequired,
+    plugins.AutoCrumbs,
+]:
     app.install(plugin())
 
 
@@ -34,7 +40,7 @@ for plugin in [plugins.AutoSession, plugins.CurrentUser, plugins.LoginRequired]:
 def home():
     if bottle.request.user.is_anon:
         return bottle.redirect("get_login")
-    return bottle.redirect("dashboard")
+    return bottle.redirect(app.get_url("tracks"))
 
 
 @app.get("/login", skip=["login_required"], name="get_login")
@@ -84,7 +90,7 @@ def otp(q: str, LoginToken):
         max_age=3600 * 24 * 60,
         **settings.cookie_kwargs
     )
-    return bottle.redirect("/dashboard")
+    return bottle.redirect(app.get_url("get_account"))
 
 
 @app.get("/logout", name="logout")
@@ -95,9 +101,17 @@ def logout():
     return bottle.redirect("/")
 
 
-@app.get("/dashboard", name="dashboard")
-def dashboard():
-    return render("dashboard.html", page_title="Dashboard")
+@app.get("/tracks", name="tracks")
+def tracks():
+    return render("tracks.html", page_title="Tracks")
+
+
+@app.get("/task/<taskid>", name="task")
+def tracks(taskid, Task):
+    task = bottle.request.session.query(Task).filter_by(id=taskid).first()
+    if task is None:
+        raise bottle.abort(404, "Page not found")
+    return render("task.html", title=task.name, task=task, crumbs=task.track.tasks)
 
 
 @app.get("/account", name="get_account")

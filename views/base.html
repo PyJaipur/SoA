@@ -40,7 +40,7 @@
      {% if not request.user.is_anon %}
      {{ request.user.username }} |
      <a href='/account'>Account</a> |
-     <a href='/dashboard'>Dashboard</a> |
+     <a href='/tracks'>Tracks</a> |
      <a href='/logout'>Logout</a>
      {% endif %}
      <hr>
@@ -49,6 +49,9 @@
       {% include 'alert.html' %}
       {% endwith %}
      {% endfor %}
+     {% if crumbs %}
+      {% include 'crumbs.html' %}
+     {% endif %}
      {% block content %}
      {% endblock %}
    </body>
