@@ -1,1 +1,1 @@
-web: cd src && python -m soa
+web: python -m soa --port $PORT

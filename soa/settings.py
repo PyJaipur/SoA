@@ -3,7 +3,6 @@ import os
 
 def env(key, default=None):
     val = os.environ.get(key, default)
-    print(f"{key:<30}:{val}")
     return val
 
 
