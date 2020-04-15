@@ -8,6 +8,26 @@
        <tr> <td>Email</td> <td>{{ request.user.email }}</td> </tr>
      </tbody>
    </table>
+   <table>
+     <thead>
+       <tr>
+         <th colspan='2'>Certificate settings</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr><td>Link</td><td><a href='/cert/{{ request.user.email_hash }}'>Your certificate</a></td></tr>
+       <tr>
+         <td>Show email</td>
+         <td><input type='checkbox'
+              {% if request.user.show_email_on_cert %}
+              checked
+              {% endif %}
+              name='show_email_on_cert'
+              >
+         </td>
+       </tr>
+     </tbody>
+   </table>
    <hr>
    <input type='submit' value='Save changes'>
  </form>

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ user.username }} {% if user.show_email_on_cert %}&lt;{{ user.email }}&gt;{% endif %}</h2>
+<ol>
+  <li>Registered!</li>
+</ol>
+{% endblock %}

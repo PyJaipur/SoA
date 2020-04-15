@@ -110,10 +110,18 @@ def profile(updated=False):
 
 @app.post("/account")
 @fill_args
-def profile(username, User):
-    updated = False
-    if username != bottle.request.user.username:
-        bottle.request.user.username = username
-        bottle.request.session.commit()
-        updated = True
-    return bottle.redirect(app.get_url("get_account", updated=updated))
+def profile(User, username=None, show_email_on_cert=None):
+    show_email_on_cert = show_email_on_cert == "on"
+    bottle.request.user.username = username
+    bottle.request.user.show_email_on_cert = show_email_on_cert
+    bottle.request.session.commit()
+    return bottle.redirect(app.get_url("get_account", updated=True))
+
+
+@app.get("/cert/<hsh>", skip=["login_required"])
+@fill_args
+def cert(hsh, User):
+    user = bottle.request.session.query(User).filter_by(email_hash=hsh).first()
+    if user is None:
+        raise bottle.abort(404, "No such page.")
+    return render("certificate.html", user=user)

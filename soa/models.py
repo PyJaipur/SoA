@@ -41,6 +41,7 @@ class User(Base):
     username = Column(String)
     permissions = Column(JSON)
     email_hash = Column(String)
+    show_email_on_cert = Column(Boolean, default=False)
 
     def ensure_email_hash(self, session):
         if self.email_hash is None:
