@@ -47,7 +47,10 @@ class AutoSession(Plugin):
         @wraps(callback)
         def wrapper(*a, **kw):
             bottle.request.session = models.Session()
-            return callback(*a, **kw)
+            try:
+                return callback(*a, **kw)
+            finally:
+                bottle.request.session.close()
 
         return wrapper
 
