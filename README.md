@@ -1,4 +1,4 @@
-# [Summer of Algorithms](https://soa.pyjaipur.org)
+# [Summer of Algorithms](https://pyjaipur-soa.herokuapp.com/)
  
 ## What is it?
 
