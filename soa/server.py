@@ -1,11 +1,24 @@
 import bottle
 import requests
+from collections import namedtuple
 from bottle_tools import fill_args
 from soa import models, plugins, mailer, settings
 
 
+Alert = namedtuple("Alert", "title message")
+
+
+def alert(msg, *, title=None):
+    "Flash an error message to the user"
+    if not hasattr(bottle.request, "alerts"):
+        bottle.request.alerts = []
+    bottle.request.alerts.append(Alert(title, msg))
+
+
 def render(template_name, **kwargs):
-    kwargs.update({"request": bottle.request})
+    kwargs.update(
+        {"request": bottle.request, "alerts": getattr(bottle.request, "alerts", [])}
+    )
     return bottle.jinja2_template(template_name, **kwargs)
 
 
@@ -25,7 +38,14 @@ def home():
 
 
 @app.get("/login", skip=["login_required"], name="get_login")
-def login():
+@fill_args
+def login(otp_sent=False):
+    if otp_sent:
+        alert(
+            "An email has been sent which contains the login link."
+            "Please open that link in your browser in order to login.",
+            title="OTP sent",
+        )
     return render("login.html")
 
 
@@ -69,7 +89,7 @@ def otp(q: str, LoginToken):
 
 @app.get("/logout", name="logout")
 def logout():
-    session.delete(bottle.request.token)
+    bottle.request.session.delete(bottle.request.token)
     bottle.request.session.commit()
     bottle.response.delete_cookie(key=settings.cookie_name, **settings.cookie_kwargs)
     return bottle.redirect("/")
@@ -81,13 +101,19 @@ def dashboard():
 
 
 @app.get("/account", name="get_account")
-def profile():
+@fill_args
+def profile(updated=False):
+    if updated:
+        alert("Updated successfully.")
     return render("account.html", page_title="Account")
 
 
 @app.post("/account")
 @fill_args
 def profile(username, User):
-    bottle.request.user.username = username
-    bottle.request.session.commit()
-    return bottle.redirect(app.get_url("get_account"))
+    updated = False
+    if username != bottle.request.user.username:
+        bottle.request.user.username = username
+        bottle.request.session.commit()
+        updated = True
+    return bottle.redirect(app.get_url("get_account", updated=updated))

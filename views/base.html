@@ -5,8 +5,30 @@
       <title>SoA</title>
       <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
       <style>
-         @import url('https://fonts.googleapis.com/css?family=Lato');
-         html { font-family: 'Lato', sans-serif; }
+        @import url('https://fonts.googleapis.com/css?family=Lato');
+        html { font-family: 'Lato', sans-serif; }
+        {% if alerts %}
+          .alert {
+          background-color: #b7dfea;
+          padding: 10px;
+          border: 1px solid #2c8898;
+          border-radius: 5px;
+          cursor:pointer;
+          }
+          @media only screen and (min-width: 768px) { 
+            .alert {
+            position: absolute;
+            left: 80%;
+            top: 5%;
+            background-color: #b7dfea;
+            padding: 10px;
+            max-width: 350px;
+            border: 1px solid #2c8898;
+            border-radius: 5px;
+            cursor:pointer;
+            }
+          }
+        {% endif %}
       </style>
    </head>
    <body>
@@ -22,6 +44,11 @@
      <a href='/logout'>Logout</a>
      {% endif %}
      <hr>
+     {% for msg in alerts %}
+      {% with title=msg.title, message=msg.message %}
+      {% include 'alert.html' %}
+      {% endwith %}
+     {% endfor %}
      {% block content %}
      {% endblock %}
    </body>

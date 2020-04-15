@@ -16,11 +16,6 @@
         value='Send me a login link'>
   </form>
   <hr>
-  {% if otp_sent|default(False) %}
-    {% with title='OTP sent', message='An email has been sent to you which contains the login link. Please open that link in your browser in order to login.' %}
-      {% include 'alert.html' %}
-    {% endwith %}
-  {% endif %}
   <h2>What is Summer of Algorithms?</h2>
   <p>
   Summers usually come with lots of free time. Summer of Algorithms (SoA) is a place where you can pick up new skills free of cost. The program is run every year by the <a  href="https://www.pyjaipur.org">PyJaipur community</a>.
