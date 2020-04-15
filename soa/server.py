@@ -69,7 +69,7 @@ def otp(q: str, LoginToken):
 
 @app.get("/logout", name="logout")
 def logout():
-    bottle.request.token.has_logged_out = True
+    session.delete(bottle.request.token)
     bottle.request.session.commit()
     bottle.response.delete_cookie(key=settings.cookie_name, **settings.cookie_kwargs)
     return bottle.redirect("/")

@@ -50,6 +50,12 @@ class User(Base):
     # ---------------
     is_anon = False
 
+    @property
+    def is_admin(self):
+        if self.permissions is not None:
+            return "is_admin" in self.permissions
+        return False
+
 
 class LoginToken(Base):
     __tablename__ = "logintoken"
