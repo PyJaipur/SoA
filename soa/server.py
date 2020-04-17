@@ -37,7 +37,7 @@ for plugin in [
 
 
 @app.get("/", name="landing")
-def home():
+def f():
     if bottle.request.user.is_.anon:
         return bottle.redirect("get_login")
     return bottle.redirect(app.get_url("tracks"))
@@ -45,7 +45,7 @@ def home():
 
 @app.get("/login", skip=["login_required"], name="get_login")
 @fill_args
-def login(otp_sent=False):
+def f(otp_sent=False):
     if otp_sent:
         alert(
             "An email has been sent which contains the login link."
@@ -58,7 +58,7 @@ def login(otp_sent=False):
 @app.post("/login", skip=["login_required"])
 @plugins.per_day_limit("login", n=300)
 @fill_args
-def login_post(email: str, LoginToken, User):
+def f(email: str, LoginToken, User):
     u = models.get_or_create(
         bottle.request.session,
         User,
@@ -73,7 +73,7 @@ def login_post(email: str, LoginToken, User):
 
 @app.get("/otp", skip=["login_required"], name="otp")
 @fill_args
-def otp(q: str, LoginToken):
+def f(q: str, LoginToken):
     tok = (
         bottle.request.session.query(LoginToken)
         .filter_by(otp=q, is_consumed=False)
@@ -94,7 +94,7 @@ def otp(q: str, LoginToken):
 
 
 @app.get("/logout", name="logout")
-def logout():
+def f():
     bottle.request.session.delete(bottle.request.token)
     bottle.request.session.commit()
     bottle.response.delete_cookie(key=settings.cookie_name, **settings.cookie_kwargs)
@@ -102,21 +102,24 @@ def logout():
 
 
 @app.get("/tracks", name="tracks")
-def tracks():
-    return render("tracks.html", page_title="Tracks")
+def f():
+    return render("tracks.html", page_title="Tracks", tracks=models.tracks)
 
 
-@app.get("/task/<taskid>", name="task")
-def tracks(taskid, Task):
-    task = bottle.request.session.query(Task).filter_by(id=taskid).first()
+@app.get("/task/<slug>", name="task")
+def f(slug):
+    task = models.taskmap.get(slug)
     if task is None:
         raise bottle.abort(404, "Page not found")
-    return render("task.html", title=task.name, task=task, crumbs=task.track.tasks)
+    if not bottle.request.user.can_see_task(slug):
+        raise bottle.abort(403, "Not allowed")
+    track = models.trackmap[task.trackslug]
+    return render("task.html", page_title=track.title, current_task=task, track=track)
 
 
 @app.get("/account", name="get_account")
 @fill_args
-def profile(User, updated=False):
+def f(User, updated=False):
     if updated:
         alert("Updated successfully.",)
     admin_kwargs = {}
@@ -127,7 +130,7 @@ def profile(User, updated=False):
 
 @app.post("/account")
 @fill_args
-def profile(User, username=None, show_email_on_cert=None):
+def f(User, username=None, show_email_on_cert=None):
     show_email_on_cert = show_email_on_cert == "on"
     bottle.request.user.username = username
     bottle.request.user.show_email_on_cert = show_email_on_cert
@@ -137,7 +140,7 @@ def profile(User, username=None, show_email_on_cert=None):
 
 @app.get("/cert/<hsh>", skip=["login_required"])
 @fill_args
-def cert(hsh, User):
+def f(hsh, User):
     user = bottle.request.session.query(User).filter_by(email_hash=hsh).first()
     if user is None:
         raise bottle.abort(404, "No such page.")

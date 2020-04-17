@@ -1,4 +1,9 @@
+import json
+import markdown
+import os
+from pathlib import Path
 import hashlib
+from collections import namedtuple
 from sqlalchemy import (
     create_engine,
     Column,
@@ -59,11 +64,25 @@ class User(Base):
     permissions = Column(JSON)
     email_hash = Column(String)
     show_email_on_cert = Column(Boolean, default=False)
+    score = Column(Integer, default=0)
+    taskprogress = Column(JSON)
 
     def ensure_email_hash(self, session):
         if self.email_hash is None:
             self.email_hash = hashlib.sha256(self.email.encode()).hexdigest()
             session.commit()
+
+    def can_see_task(self, slug):
+        # TODO: In the future we might want to withold tasks from users until
+        # they clear certain conditions.
+        # For now they can see everything.
+        return True
+        d = (
+            {"current": [], "done": []}
+            if self.taskprogress is None
+            else self.taskprogress
+        )
+        return slug == d["current"] or slug in d["done"] or taskmap[slug].order == 1
 
     # ---------------
 
@@ -101,25 +120,45 @@ class Event(Base):
     end = Column(DateTime(timezone=True))
 
 
-class Track(Base):
-    __tablename__ = "track"
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    link = Column(String)
-
-    tasks = relationship("Task", back_populates="track")
-
-
-class Task(Base):
-    __tablename__ = "task"
-    id = Column(Integer, primary_key=True)
-    track_id = Column(Integer, ForeignKey("track.id"))
-    title = Column(String)
-    template_name = Column(String)
-
-    track = relationship("Track", back_populates="tasks")
-
-
 Base.metadata.create_all(engine)
-bt.common_kwargs.update({"User": User, "LoginToken": LoginToken, "Task": Task})
+bt.common_kwargs.update(
+    {"User": User, "LoginToken": LoginToken,}
+)
 Session = sessionmaker(engine)
+
+
+def load_tracks(trackdir):
+    """
+    Tracks and tasks are kept in RAM so that we don't need to hit the DB
+    everytime someone requests a task. Only when they make a submission we
+    hit the DB.
+    """
+    Track = namedtuple("Track", "slug title description tasks")
+    Task = namedtuple("Task", "slug order html trackslug")
+    tracks = []
+    for trackslug in os.listdir(trackdir):
+        track = Path(trackdir) / trackslug
+        with open(track / "meta.json", "r") as fl:
+            meta = json.loads(fl.read())
+        tasks = []
+        for task in os.listdir(track):
+            if task.endswith("md"):
+                with open(track / task, "r") as fl:
+                    html = markdown.markdown(fl.read())
+            elif task.endswith("html"):
+                with open(track / task, "r") as fl:
+                    html = fl.read()
+            else:
+                continue
+            order = int(task.split(".")[0])
+            tasks.append(Task(f"{trackslug}{order}", order, html, trackslug))
+        tasks = tuple(sorted(tasks, key=lambda x: x.order))
+        tracks.append(Track(trackslug, meta["title"], meta["description"], tasks))
+    print(tracks)
+    return tuple(tracks)
+
+
+# These will be dynamically replaced later on
+tasks = None
+trackmap = None
+taskmap = None

@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--port", default=8000, type=int)
 parser.add_argument("--email", default=None, type=str)
 parser.add_argument("--add-perm", default=None, type=str)
+parser.add_argument("--tracks-dir", default="tracks", type=str)
 args = parser.parse_args()
 
 if args.email and args.add_perm:  # Add a new perm to the given user
@@ -21,4 +22,9 @@ if args.email and args.add_perm:  # Add a new perm to the given user
         session.commit()
     session.close()
 else:
+    models.tracks = models.load_tracks(args.tracks_dir)
+    models.trackmap = {track.slug: track for track in models.tracks}
+    models.taskmap = {
+        task.slug: task for track in models.tracks for task in track.tasks
+    }
     app.run(port=args.port, host="0.0.0.0", reloader=True, debug=True)

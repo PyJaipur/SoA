@@ -1,7 +1,22 @@
 <div class='crumbholder'>
-  <ol>
-    {% for crumb in crumbs %}
-    <li>{{ crumb.text }}</li>
+  <ul>
+    {% for task in track.tasks %}
+    <li><a href='/task/{{ task.slug }}'>Task {{ task.order }}</a>
+      {% if task.slug == current_task.slug %}←{% endif %}</li>
     {% endfor %}
-  </ol>
+  </ul>
 </div>
+<style>
+@media only screen and (min-width: 768px) { 
+.crumbholder{
+  position:absolute;
+  left: 10px;
+  width: 120px;
+  padding-right:5px;
+  border-right: 2px solid #4a4a4a;
+  border-top: 2px solid #4a4a4a;
+  border-bottom: 2px solid #4a4a4a;
+  border-radius: 0px 5px 5px 0px;
+}
+}
+</style>
