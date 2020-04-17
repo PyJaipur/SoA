@@ -116,10 +116,13 @@ def tracks(taskid, Task):
 
 @app.get("/account", name="get_account")
 @fill_args
-def profile(updated=False):
+def profile(User, updated=False):
     if updated:
-        alert("Updated successfully.")
-    return render("account.html", page_title="Account")
+        alert("Updated successfully.",)
+    admin_kwargs = {}
+    if bottle.request.user.is_.admin:
+        admin_kwargs = {"user_count": bottle.request.session.query(User).count()}
+    return render("account.html", page_title="Account", **admin_kwargs)
 
 
 @app.post("/account")

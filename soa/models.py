@@ -28,10 +28,28 @@ def get_or_create(session, model, defaults, **kwargs):
     return instance
 
 
+class Checker:
+    """
+    Using this you can do
+        
+        user.is_.admin
+    """
+
+    __slots__ = ["collection", "prefix"]
+
+    def __init__(self, collection, prefix):
+        self.collection = collection
+        self.prefix = prefix
+
+    def __getattr__(self, x):
+        return self.prefix + x in self.collection
+
+
 class AnonUser:
     id = username = email = None
     permissions = []
     is_anon = True
+    is_ = Checker(set(), "is_")
 
 
 class User(Base):
@@ -52,10 +70,10 @@ class User(Base):
     is_anon = False
 
     @property
-    def is_admin(self):
-        if self.permissions is not None:
-            return "is_admin" in self.permissions
-        return False
+    def is_(self):
+        return Checker(
+            set(self.permissions) if self.permissions is not None else set(), "is_"
+        )
 
 
 class LoginToken(Base):

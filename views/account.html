@@ -4,7 +4,6 @@
    <table>
      <tbody>
        <tr> <td>Name</td> <td> <input value='{{ request.user.username|e }}' name='username'> </td> </tr>
-       <tr> <td>UID</td> <td>{{ request.user.email_hash }}</td> </tr>
        <tr> <td>Email</td> <td>{{ request.user.email }}</td> </tr>
      </tbody>
    </table>
@@ -28,7 +27,18 @@
        </tr>
      </tbody>
    </table>
-   <hr>
    <input type='submit' value='Save changes'>
  </form>
+ <hr>
+ {% if request.user.is_.admin %}
+ <table>
+   <thead>
+     <tr>
+       <th colspan='2'>Site stats</th>
+     </tr>
+   </thead>
+   <tbody>
+     <tr> <td>User count</td> <td>{{ user_count }}</td> </tr>
+ </table>
+ {% endif %}
 {% endblock %}
