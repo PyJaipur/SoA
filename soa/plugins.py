@@ -87,7 +87,7 @@ class LoginRequired(Plugin):
     def apply(self, callback, route):
         @wraps(callback)
         def wrapper(*a, **kw):
-            if bottle.request.user.is_anon:
+            if bottle.request.user.is_.anon:
                 return bottle.redirect(
                     self.app.get_url("get_login", next_url=bottle.request.url)
                 )

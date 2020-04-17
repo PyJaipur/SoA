@@ -48,8 +48,7 @@ class Checker:
 class AnonUser:
     id = username = email = None
     permissions = []
-    is_anon = True
-    is_ = Checker(set(), "is_")
+    is_ = Checker(set(["is_anon"]), "is_")
 
 
 class User(Base):
@@ -67,7 +66,6 @@ class User(Base):
             session.commit()
 
     # ---------------
-    is_anon = False
 
     @property
     def is_(self):
@@ -94,20 +92,6 @@ class LoginToken(Base):
             session.add(tok)
             session.commit()
             return tok
-
-
-class Group(Base):
-    __tablename__ = "group"
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    permissions = Column(JSON)
-
-
-class UserGroupMembership(Base):
-    __tablename__ = "usergroup"
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("user.id"))
-    group_id = Column(Integer, ForeignKey("group.id"))
 
 
 class Event(Base):

@@ -38,7 +38,7 @@ for plugin in [
 
 @app.get("/", name="landing")
 def home():
-    if bottle.request.user.is_anon:
+    if bottle.request.user.is_.anon:
         return bottle.redirect("get_login")
     return bottle.redirect(app.get_url("tracks"))
 
