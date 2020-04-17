@@ -113,13 +113,6 @@ class LoginToken(Base):
             return tok
 
 
-class Event(Base):
-    __tablename__ = "event"
-    id = Column(Integer, primary_key=True)
-    start = Column(DateTime(timezone=True))
-    end = Column(DateTime(timezone=True))
-
-
 Base.metadata.create_all(engine)
 bt.common_kwargs.update(
     {"User": User, "LoginToken": LoginToken,}
@@ -154,11 +147,10 @@ def load_tracks(trackdir):
             tasks.append(Task(f"{trackslug}{order}", order, html, trackslug))
         tasks = tuple(sorted(tasks, key=lambda x: x.order))
         tracks.append(Track(trackslug, meta["title"], meta["description"], tasks))
-    print(tracks)
     return tuple(tracks)
 
 
-# These will be dynamically replaced later on
+# These will be dynamically replaced later on in __main__.py
 tasks = None
 trackmap = None
 taskmap = None

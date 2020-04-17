@@ -1,6 +1,6 @@
 import argparse
 import logging
-from soa import app, settings, models
+from soa import app, settings, models, housekeeping
 
 if settings.is_dev:
     log = logging.getLogger("soa")
@@ -9,18 +9,12 @@ if settings.is_dev:
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--port", default=8000, type=int)
-parser.add_argument("--email", default=None, type=str)
-parser.add_argument("--add-perm", default=None, type=str)
 parser.add_argument("--tracks-dir", default="tracks", type=str)
+parser.add_argument("--housekeeping", default=None, type=str)
 args = parser.parse_args()
 
-if args.email and args.add_perm:  # Add a new perm to the given user
-    session = models.Session()
-    u = session.query(models.User).filter_by(email=args.email).first()
-    if u is not None:
-        u.permissions = list(set(u.permissions + [args.add_perm]))
-        session.commit()
-    session.close()
+if args.housekeeping:
+    housekeeping.handle(args)
 else:
     models.tracks = models.load_tracks(args.tracks_dir)
     models.trackmap = {track.slug: track for track in models.tracks}

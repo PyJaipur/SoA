@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>{{ user.username }} {% if user.show_email_on_cert %}&lt;{{ user.email }}&gt;{% endif %}</h2>
+<h2>Progress certificate</h2>
+<b>For: </b>{{ user.username }} {% if user.show_email_on_cert %}&lt;{{ user.email }}&gt;{% endif %}
 <ol>
   <li>Registered!</li>
 </ol>
