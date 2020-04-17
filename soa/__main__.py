@@ -21,4 +21,7 @@ else:
     models.taskmap = {
         task.slug: task for track in models.tracks for task in track.tasks
     }
-    app.run(port=args.port, host="0.0.0.0", reloader=True, debug=True)
+    kwargs = {}
+    if settings.is_dev:
+        kwargs.update(dict(debug=True, reloader=True))
+    app.run(port=args.port, host="0.0.0.0", **kwargs)
