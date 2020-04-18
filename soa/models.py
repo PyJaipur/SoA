@@ -75,7 +75,12 @@ class User(Base):
             self.email_hash = hashlib.sha256(self.email.encode()).hexdigest()
             session.commit()
 
-    def has_completed(self, track):
+    def has_completed_task(self, task):
+        if self.taskprogress is None:
+            return False
+        return task.slug in self.taskprogress["done"]
+
+    def has_completed_track(self, track):
         if self.taskprogress is None:
             return False
         return all([t.slug in self.taskprogress["done"] for t in track.tasks])

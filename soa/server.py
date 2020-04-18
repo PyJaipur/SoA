@@ -1,4 +1,5 @@
 import bottle
+from copy import deepcopy
 from validate_email import validate_email
 import requests
 from bottle_tools import fill_args
@@ -108,6 +109,29 @@ def f(slug):
     if track.is_locked:
         raise bottle.abort(404, "Page not found")
     return render("task.html", page_title=track.title, current_task=task, track=track)
+
+
+@app.post("/task/<slug>", name="post_task")
+def f(slug):
+    task = tracks.Track.taskmap.get(slug)
+    if task is None:
+        raise bottle.abort(404, "Page not found")
+    track = tracks.Track.trackmap[task.trackslug]
+    if track.is_locked:
+        raise bottle.abort(404, "Page not found")
+    # ---------
+    if not bottle.request.user.has_completed_task(task) and all(
+        [
+            fn(bottle.request.forms.get(value_name))
+            for value_name, fn in task.checking_fns.items()
+        ]
+    ):
+        tp = deepcopy(bottle.request.user.taskprogress)
+        tp["done"].append(task.slug)
+        bottle.request.user.taskprogress = tp
+        bottle.request.session.commit()
+        alert("Good job! You can move on to the next task now.")
+    return render("task.html", page_title=track.title, current_task=task, track=track,)
 
 
 @app.get("/account", name="get_account")

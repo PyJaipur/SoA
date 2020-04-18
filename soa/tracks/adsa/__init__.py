@@ -13,7 +13,7 @@ class ADSA(Track):
         return (
             hasattr(bottle.request, "user")
             and not bottle.request.user.is_.anon
-            and not bottle.request.user.has_completed(dsa)
+            and not bottle.request.user.has_completed_track(dsa)
         )
 
 
