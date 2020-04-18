@@ -120,17 +120,20 @@ def f(slug):
     if track.is_locked:
         raise bottle.abort(404, "Page not found")
     # ---------
-    if not bottle.request.user.has_completed_task(task) and all(
-        [
-            fn(bottle.request.forms.get(value_name))
-            for value_name, fn in task.checking_fns.items()
-        ]
-    ):
-        tp = deepcopy(bottle.request.user.taskprogress)
-        tp["done"].append(task.slug)
-        bottle.request.user.taskprogress = tp
-        bottle.request.session.commit()
-        alert("Good job! You can move on to the next task now.")
+    if not bottle.request.user.has_completed_task(task):
+        if all(
+            [
+                fn(bottle.request.forms.get(value_name))
+                for value_name, fn in task.checking_fns.items()
+            ]
+        ):
+            tp = deepcopy(bottle.request.user.taskprogress)
+            tp["done"].append(task.slug)
+            bottle.request.user.taskprogress = tp
+            bottle.request.session.commit()
+            alert("Good job! You can move on to the next task now.")
+        else:
+            alert("Wrong answer.")
     return render("task.html", page_title=track.title, current_task=task, track=track,)
 
 

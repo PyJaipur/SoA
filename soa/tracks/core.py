@@ -42,8 +42,8 @@ def load_tracks():
                         ]
                     )
                     pycode = dedent(pycode)
-                    g, l = {}, {}
-                    exec(pycode, g, l)
+                    l = {}
+                    exec(pycode, globals(), l)
                     for k, v in l.items():
                         checking_fns[k] = v
                     code.decompose()
