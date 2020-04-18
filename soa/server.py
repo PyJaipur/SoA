@@ -50,7 +50,12 @@ def f(email: str, LoginToken, User):
     u = models.get_or_create(
         bottle.request.session,
         User,
-        defaults={"email": email, "username": "?", "permissions": []},
+        defaults={
+            "email": email,
+            "username": "?",
+            "permissions": [],
+            "taskprogress": {"done": []},
+        },
         email=email,
     )
     u.ensure_email_hash(bottle.request.session)

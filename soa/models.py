@@ -75,17 +75,10 @@ class User(Base):
             self.email_hash = hashlib.sha256(self.email.encode()).hexdigest()
             session.commit()
 
-    def can_see_task(self, slug):
-        # TODO: In the future we might want to withold tasks from users until
-        # they clear certain conditions.
-        # For now they can see everything.
-        return True
-        d = (
-            {"current": [], "done": []}
-            if self.taskprogress is None
-            else self.taskprogress
-        )
-        return slug == d["current"] or slug in d["done"] or taskmap[slug].order == 1
+    def has_completed(self, track):
+        if self.taskprogress is None:
+            return False
+        return all([t.slug in self.taskprogress["done"] for t in track.tasks])
 
     # ---------------
 

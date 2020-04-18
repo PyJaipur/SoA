@@ -7,13 +7,7 @@ class Python(Track):
     description = (
         "The basics of python that you'll need to complete the rest of the tracks."
     )
-
-    @property
-    def is_locked(self):
-        """
-        If this track needs to depend on some other track, change this function
-        """
-        return False
+    is_locked = False
 
 
 Track.tracks.append(Python())
