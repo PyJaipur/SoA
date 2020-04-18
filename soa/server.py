@@ -2,7 +2,7 @@ import bottle
 from validate_email import validate_email
 import requests
 from bottle_tools import fill_args
-from soa import models, plugins, mailer, settings
+from soa import models, plugins, mailer, settings, tracks
 
 alert = plugins.alert
 render = plugins.render
@@ -91,17 +91,17 @@ def f():
 
 @app.get("/tracks", name="tracks")
 def f():
-    return render("tracks.html", page_title="Tracks", tracks=models.tracks)
+    return render("tracks.html", page_title="Tracks", tracks=tracks.Track.tracks)
 
 
 @app.get("/task/<slug>", name="task")
 def f(slug):
-    task = models.taskmap.get(slug)
+    task = tracks.Track.taskmap.get(slug)
     if task is None:
         raise bottle.abort(404, "Page not found")
     if not bottle.request.user.can_see_task(slug):
         raise bottle.abort(403, "Not allowed")
-    track = models.trackmap[task.trackslug]
+    track = tracks.Track.trackmap[task.trackslug]
     return render("task.html", page_title=track.title, current_task=task, track=track)
 
 

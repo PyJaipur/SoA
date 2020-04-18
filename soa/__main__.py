@@ -1,6 +1,6 @@
 import argparse
 import logging
-from soa import app, settings, models, housekeeping
+from soa import app, settings, models, housekeeping, tracks
 
 if settings.is_dev:
     log = logging.getLogger("soa")
@@ -16,11 +16,7 @@ args = parser.parse_args()
 if args.housekeeping:
     housekeeping.handle(args)
 else:
-    models.tracks = models.load_tracks(args.tracks_dir)
-    models.trackmap = {track.slug: track for track in models.tracks}
-    models.taskmap = {
-        task.slug: task for track in models.tracks for task in track.tasks
-    }
+    tracks.core.load_tracks()
     kwargs = {}
     if settings.is_dev:
         kwargs.update(dict(debug=True, reloader=True))

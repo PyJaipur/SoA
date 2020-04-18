@@ -1,9 +1,4 @@
-import json
-import markdown
-import os
-from pathlib import Path
 import hashlib
-from collections import namedtuple
 from sqlalchemy import (
     create_engine,
     Column,
@@ -126,39 +121,3 @@ bt.common_kwargs.update(
     {"User": User, "LoginToken": LoginToken,}
 )
 Session = sessionmaker(engine)
-
-
-def load_tracks(trackdir):
-    """
-    Tracks and tasks are kept in RAM so that we don't need to hit the DB
-    everytime someone requests a task. Only when they make a submission we
-    hit the DB.
-    """
-    Track = namedtuple("Track", "slug title description tasks")
-    Task = namedtuple("Task", "slug order html trackslug")
-    tracks = []
-    for trackslug in os.listdir(trackdir):
-        track = Path(trackdir) / trackslug
-        with open(track / "meta.json", "r") as fl:
-            meta = json.loads(fl.read())
-        tasks = []
-        for task in os.listdir(track):
-            if task.endswith("md"):
-                with open(track / task, "r") as fl:
-                    html = markdown.markdown(fl.read())
-            elif task.endswith("html"):
-                with open(track / task, "r") as fl:
-                    html = fl.read()
-            else:
-                continue
-            order = int(task.split(".")[0])
-            tasks.append(Task(f"{trackslug}{order}", order, html, trackslug))
-        tasks = tuple(sorted(tasks, key=lambda x: x.order))
-        tracks.append(Track(trackslug, meta["title"], meta["description"], tasks))
-    return tuple(tracks)
-
-
-# These will be dynamically replaced later on in __main__.py
-tasks = None
-trackmap = None
-taskmap = None
