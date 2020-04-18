@@ -11,7 +11,7 @@ beautifulsoup4==4.9.0 \
 black==19.10b0 \
     --hash=sha256:1b30e59be925fafc1ee4565e5e08abef6b03fe455102883820fe5ee2e4734e0b \
     --hash=sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539
--e git+https://github.com/bottlepy/bottle@8294b30341f08da30b10d3d35aadb2fb13beda00#egg=bottle
+git+https://github.com/bottlepy/bottle@8294b30341f08da30b10d3d35aadb2fb13beda00#egg=bottle
 bottle-tools==2019.12.22 \
     --hash=sha256:47bbbf1b90de8f97db80a13344c2bc9c2d733684d28af24d47feb2d4199f46e1
 bs4==0.0.1 \
