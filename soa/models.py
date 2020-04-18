@@ -16,6 +16,7 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.ext.hybrid import hybrid_property
 from soa.settings import database_url
 import bottle_tools as bt
 from secrets import token_urlsafe
@@ -64,8 +65,15 @@ class User(Base):
     permissions = Column(JSON)
     email_hash = Column(String)
     show_email_on_cert = Column(Boolean, default=False)
-    score = Column(Integer, default=0)
     taskprogress = Column(JSON)
+    last_seen = Column(DateTime)
+
+    login_score = Column(Integer, default=0)
+    task_score = Column(Integer, default=0)
+
+    @hybrid_property
+    def score(self):
+        return self.login_score + self.task_score
 
     def ensure_email_hash(self, session):
         if self.email_hash is None:

@@ -1,26 +1,10 @@
 import bottle
 import requests
-from collections import namedtuple
 from bottle_tools import fill_args
 from soa import models, plugins, mailer, settings
 
-
-Alert = namedtuple("Alert", "title message")
-Crumb = namedtuple("Crumb", "text link")
-
-
-def alert(msg, *, title=None):
-    "Flash an error message to the user"
-    if not hasattr(bottle.request, "alerts"):
-        bottle.request.alerts = []
-    bottle.request.alerts.append(Alert(title, msg))
-
-
-def render(template_name, **kwargs):
-    kwargs.update(
-        {"request": bottle.request, "alerts": getattr(bottle.request, "alerts", [])}
-    )
-    return bottle.jinja2_template(template_name, **kwargs)
+alert = plugins.alert
+render = plugins.render
 
 
 app = bottle.Bottle()
@@ -28,7 +12,7 @@ for plugin in [
     plugins.AutoSession,
     plugins.CurrentUser,
     plugins.LoginRequired,
-    plugins.AutoCrumbs,
+    plugins.LastLogin,
 ]:
     app.install(plugin())
 
