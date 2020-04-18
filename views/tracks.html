@@ -9,7 +9,11 @@ Pick a track!
 <ol>
 {% for track in tracks %}
   <li class='track'>
-    <a href='/task/{{ track.tasks[0].slug }}'>{{ track.title }}</a>
+    {% if track.is_locked %}
+      <a href='#'>{{ track.title }} 🔒</a>
+    {% else %}
+      <a href='/task/{{ track.tasks[0].slug }}'>{{ track.title }}</a>
+    {% endif %}
     <p>{{ track.description }}</p>
   </li>
 {% endfor %}

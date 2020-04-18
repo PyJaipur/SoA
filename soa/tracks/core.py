@@ -10,7 +10,7 @@ class Track:
     slug = None
     title = None
     description = None
-    locked = True
+    is_locked = True
 
 
 def load_tracks():

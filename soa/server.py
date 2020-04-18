@@ -99,9 +99,9 @@ def f(slug):
     task = tracks.Track.taskmap.get(slug)
     if task is None:
         raise bottle.abort(404, "Page not found")
-    if not bottle.request.user.can_see_task(slug):
-        raise bottle.abort(403, "Not allowed")
     track = tracks.Track.trackmap[task.trackslug]
+    if track.is_locked:
+        raise bottle.abort(404, "Page not found")
     return render("task.html", page_title=track.title, current_task=task, track=track)
 
 
