@@ -164,4 +164,4 @@ def f(hsh, User):
     user = bottle.request.session.query(User).filter_by(email_hash=hsh).first()
     if user is None:
         raise bottle.abort(404, "No such page.")
-    return render("certificate.html", user=user)
+    return render("certificate.html", user=user, tracks=tracks.Track.tracks)

@@ -2,7 +2,14 @@
 {% block content %}
 <h2>Progress certificate</h2>
 <b>For: </b>{{ user.username }} {% if user.show_email_on_cert %}&lt;{{ user.email }}&gt;{% endif %}
-<ol>
+<ul>
   <li>Registered!</li>
-</ol>
+{% for track in tracks %}
+  {% if user.has_completed_track(track) %}
+  <li>
+  {{ track.title }} track completed!
+  </li>
+  {% endif %}
+{% endfor %}
+</ul>
 {% endblock %}
