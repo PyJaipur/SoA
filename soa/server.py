@@ -1,4 +1,5 @@
 import bottle
+from validate_email import validate_email
 import requests
 from bottle_tools import fill_args
 from soa import models, plugins, mailer, settings
@@ -40,9 +41,12 @@ def f(otp_sent=False):
 
 
 @app.post("/login", skip=["login_required"])
-@plugins.per_day_limit("login", n=300)
 @fill_args
 def f(email: str, LoginToken, User):
+    if not validate_email(email):
+        return bottle.redirect(app.get_url("get_login", invalid_email=True))
+    plugins.within_limits("login", n=300)
+    plugins.within_limits(email, n=10)  # a user can only login 10 times a day
     u = models.get_or_create(
         bottle.request.session,
         User,

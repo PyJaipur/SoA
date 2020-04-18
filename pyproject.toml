@@ -16,6 +16,9 @@ requests = "^2.23.0"
 redis = "^3.4.1"
 bottle = {git = "https://github.com/bottlepy/bottle", rev = "8294b30"}
 markdown = "^3.2.1"
+validate_email = "^1.3"
+pyDNS = {version = "^2.3.6", python = "3.7"}
+py3DNS = "^3.2.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

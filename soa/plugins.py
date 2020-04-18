@@ -10,26 +10,18 @@ DAY_STRF = "%Y.%m.%d"
 Alert = namedtuple("Alert", "title message")
 
 
-def per_day_limit(name, n):
-    def wrapper2(fn):
-        @wraps(fn)
-        def wrapper(*a, **kw):
-            ts = datetime.utcnow().strftime(DAY_STRF)
-            keyname = name + ":" + ts
-            current = R.get(keyname)
-            current = int(current.decode()) if current is not None else 0
-            if current is not None and current > n:
-                raise bottle.abort(429, "Please retry later")
-            else:
-                with R.pipeline() as pipe:
-                    pipe.incr(keyname)
-                    pipe.expire(keyname, 24 * 60 * 60)
-                    pipe.execute()
-                return fn(*a, **kw)
-
-        return wrapper
-
-    return wrapper2
+def within_limits(name, n):
+    ts = datetime.utcnow().strftime(DAY_STRF)
+    keyname = name + ":" + ts
+    current = R.get(keyname)
+    current = int(current.decode()) if current is not None else 0
+    if current is not None and current > n:
+        raise bottle.abort(429, "Please retry later")
+    else:
+        with R.pipeline() as pipe:
+            pipe.incr(keyname)
+            pipe.expire(keyname, 24 * 60 * 60)
+            pipe.execute()
 
 
 def render(template_name, **kwargs):
