@@ -70,12 +70,8 @@ description = "Fast and simple WSGI-framework for small web-applications."
 name = "bottle"
 optional = false
 python-versions = "*"
-version = "0.13.dev0"
+version = "0.12.18"
 
-[package.source]
-reference = "8294b30341f08da30b10d3d35aadb2fb13beda00"
-type = "git"
-url = "https://github.com/bottlepy/bottle"
 [[package]]
 category = "main"
 description = ""
@@ -456,7 +452,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "4a9581dd13402445c7307c387bcd90dbb58ceb8fde84dcf5322163134453c38d"
+content-hash = "e2de9ac734cbd44c7057c0444714c47bd69ca0a2d614bff1f05e01acdd1741b7"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -481,7 +477,10 @@ black = [
     {file = "black-19.10b0-py36-none-any.whl", hash = "sha256:1b30e59be925fafc1ee4565e5e08abef6b03fe455102883820fe5ee2e4734e0b"},
     {file = "black-19.10b0.tar.gz", hash = "sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539"},
 ]
-bottle = []
+bottle = [
+    {file = "bottle-0.12.18-py3-none-any.whl", hash = "sha256:43157254e88f32c6be16f8d9eb1f1d1472396a4e174ebd2bf62544854ecf37e7"},
+    {file = "bottle-0.12.18.tar.gz", hash = "sha256:0819b74b145a7def225c0e83b16a4d5711fde751cd92bae467a69efce720f69e"},
+]
 bottle-tools = [
     {file = "bottle_tools-2019.12.22.tar.gz", hash = "sha256:47bbbf1b90de8f97db80a13344c2bc9c2d733684d28af24d47feb2d4199f46e1"},
 ]
