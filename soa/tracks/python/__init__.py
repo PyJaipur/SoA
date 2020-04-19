@@ -8,3 +8,4 @@ class Python(Track):
         "The basics of python that you'll need to complete the rest of the tracks."
     )
     is_locked = False
+    gh_issue_map = {1: 19}

@@ -17,6 +17,7 @@ class Track:
     description = None
     is_locked = True
     score = 1
+    gh_issue_map = None
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -29,7 +30,7 @@ def load_tracks():
     everytime someone requests a task. Only when they make a submission we
     hit the DB.
     """
-    Task = namedtuple("Task", "slug order html trackslug checking_fns score")
+    Task = namedtuple("Task", "slug order html trackslug checking_fns score, gh_issue")
     for track in trackmap.values():
         tasks = []
         trackpath = Path("soa") / "tracks" / track.slug
@@ -67,6 +68,9 @@ def load_tracks():
                     track.slug,
                     checking_fns,
                     track.score,
+                    None
+                    if track.gh_issue_map is None
+                    else track.gh_issue_map.get(order),
                 )
             )
         tasks = tuple(sorted(tasks, key=lambda x: x.order))
