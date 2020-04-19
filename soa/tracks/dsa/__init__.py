@@ -7,6 +7,7 @@ class DSA(Track):
     title = "Data structures and algorithms"
     description = "Data structures and how they are used in algorithms."
     score = 2
+    gh_issue_map = {1: 20}
 
     @property
     def is_locked(self):
