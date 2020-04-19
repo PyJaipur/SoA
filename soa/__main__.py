@@ -25,6 +25,6 @@ else:
         kwargs.update(dict(debug=True, reloader=True))
     else:
         kwargs.update(
-            {"server": "gunicorn", "accesslog": "-", "errorlog": "-", "threads": 4,}
+            {"server": "gunicorn", "accesslog": "-", "errorlog": "-", "threads": 1,}
         )
     app.run(**kwargs)
