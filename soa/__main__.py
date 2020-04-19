@@ -23,8 +23,5 @@ else:
     }
     if settings.is_dev:
         kwargs.update(dict(debug=True, reloader=True))
-    else:
-        kwargs.update(
-            {"server": "gunicorn", "accesslog": "-", "errorlog": "-", "threads": 1,}
-        )
+    kwargs["server"] = "gevent"
     app.run(**kwargs)
