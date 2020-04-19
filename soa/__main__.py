@@ -17,7 +17,14 @@ if args.housekeeping:
     housekeeping.handle(args)
 else:
     tracks.core.load_tracks()
-    kwargs = {}
+    kwargs = {
+        "port": args.port,
+        "host": "0.0.0.0",
+    }
     if settings.is_dev:
         kwargs.update(dict(debug=True, reloader=True))
-    app.run(port=args.port, host="0.0.0.0", **kwargs)
+    else:
+        kwargs.update(
+            {"server": "gunicorn", "accesslog": "-", "errorlog": "-", "workers": 4,}
+        )
+    app.run(**kwargs)

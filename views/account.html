@@ -31,14 +31,6 @@
  </form>
  <hr>
  {% if request.user.is_.admin %}
- <table>
-   <thead>
-     <tr>
-       <th colspan='2'>Site stats</th>
-     </tr>
-   </thead>
-   <tbody>
-     <tr> <td>User count</td> <td>{{ user_count }}</td> </tr>
- </table>
+ <a href='/stats'>Stats</a>
  {% endif %}
 {% endblock %}

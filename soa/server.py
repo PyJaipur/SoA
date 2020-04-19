@@ -19,6 +19,27 @@ for plugin in [
     app.install(plugin())
 
 
+## Error pages
+@app.error(404)
+def f(error):
+    return render("error/404.html", error=error)
+
+
+@app.error(403)
+def f(error):
+    return render("error/403.html", error=error)
+
+
+@app.error(429)
+def f(error):
+    return render("error/429.html", error=error)
+
+
+@app.error(500)
+def f(error):
+    return render("error/500.html", error=error)
+
+
 ## -------------- routes
 
 
@@ -165,3 +186,16 @@ def f(hsh, User):
     if user is None:
         raise bottle.abort(404, "No such page.")
     return render("certificate.html", user=user, tracks=tracks.Track.tracks)
+
+
+@app.get("/stats")
+@fill_args
+def f(User, userlist=False):
+    if not bottle.request.user.is_.admin:
+        raise bottle.abort(404, "No such page.")
+    kwargs = {}
+    if userlist:
+        kwargs["userlist"] = bottle.request.session.query(User).order_by(
+            User.last_seen.desc()
+        )
+    return render("stats/index.html", **kwargs)
