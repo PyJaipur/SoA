@@ -78,8 +78,6 @@ This is the basic filetree for the project. Please refer to the actual filetree 
         slug = 'mytrack'
         title = 'My Track'
         description = 'Absolutely mine'
-
-      Track.tracks.append(MyTrack())
       ```
     - Create a file `soa/tracks/mytrack/1.md` and put the contents of your first task there.
     - Create a file `soa/tracks/mytrack/2.md` and put the contents of your first task there.

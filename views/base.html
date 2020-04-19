@@ -9,18 +9,25 @@
         html { font-family: 'Lato', sans-serif; }
         {% if alerts %}
           .alert {
-          background-color: #b7dfea;
           padding: 5px;
           border: 1px solid #2c8898;
           border-radius: 5px;
           cursor:pointer;
+          }
+          .info{
+          background-color: #b7dfea;
+          }
+          .success{
+          background-color: #85ffc7;
+          }
+          .danger{
+          background-color: #f4989c;
           }
           @media only screen and (min-width: 768px) { 
             .alert {
             position: absolute;
             left: 80%;
             top: 5%;
-            background-color: #b7dfea;
             padding: 10px;
             max-width: 350px;
             border: 1px solid #2c8898;
@@ -45,7 +52,7 @@
      {% endif %}
      <hr>
      {% for msg in alerts %}
-      {% with title=msg.title, message=msg.message %}
+      {% with title=msg.title, message=msg.message, color=msg.color %}
       {% include 'alert.html' %}
       {% endwith %}
      {% endfor %}

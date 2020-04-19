@@ -7,7 +7,7 @@ from functools import wraps
 
 R = redis.from_url(settings.redis_url)
 DAY_STRF = "%Y.%m.%d"
-Alert = namedtuple("Alert", "title message")
+Alert = namedtuple("Alert", "title message color")
 
 
 def within_limits(name, n):
@@ -31,11 +31,11 @@ def render(template_name, **kwargs):
     return bottle.jinja2_template(template_name, **kwargs)
 
 
-def alert(msg, *, title=None):
+def alert(msg, *, title=None, color="info"):
     "Flash an error message to the user"
     if not hasattr(bottle.request, "alerts"):
         bottle.request.alerts = []
-    bottle.request.alerts.append(Alert(title, msg))
+    bottle.request.alerts.append(Alert(title, msg, color))
 
 
 class Plugin:
@@ -110,18 +110,16 @@ class LastLogin(Plugin):
 
     def encourage_user(self, score):
         "Encourage the person everyday"
+        kw = dict(title="🎉 +1 point.", color="success")
         if score == 1:
             alert(
-                "🎉 +1 point."
                 "Every day you login you get a point since the secret to doing anything well is to do it everyday.",
-                title="Daily login",
+                **kw
             )
         elif score < 5:
-            alert("🎉 +1 point", title="Daily login")
+            alert("", **kw)
         elif score < 10:
-            alert(
-                "🎉 +1 point. You're really good at this! Good job!", title="Daily login"
-            )
+            alert("You're really good at this! Good job!", **kw)
 
     def apply(self, callback, route):
         @wraps(callback)

@@ -7,12 +7,20 @@ from collections import namedtuple
 from textwrap import dedent
 
 
+trackmap = {}
+taskmap = {}
+
+
 class Track:
-    tracks = []
     slug = None
     title = None
     description = None
     is_locked = True
+    score = 1
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        trackmap[getattr(cls, "slug")] = cls
 
 
 def load_tracks():
@@ -21,10 +29,8 @@ def load_tracks():
     everytime someone requests a task. Only when they make a submission we
     hit the DB.
     """
-    global Track
-    Task = namedtuple("Task", "slug order html trackslug checking_fns")
-    tracks = []
-    for track in Track.tracks:
+    Task = namedtuple("Task", "slug order html trackslug checking_fns score")
+    for track in trackmap.values():
         tasks = []
         trackpath = Path("soa") / "tracks" / track.slug
         for task in os.listdir(trackpath):
@@ -54,11 +60,18 @@ def load_tracks():
                 continue
             order = int(task.split(".")[0])
             tasks.append(
-                Task(f"{track.slug}{order}", order, html, track.slug, checking_fns)
+                Task(
+                    f"{track.slug}{order}",
+                    order,
+                    html,
+                    track.slug,
+                    checking_fns,
+                    track.score,
+                )
             )
         tasks = tuple(sorted(tasks, key=lambda x: x.order))
         track.tasks = tasks
-        tracks.append(track)
-    Track.tracks = tracks
-    Track.trackmap = {t.slug: t for t in Track.tracks}
-    Track.taskmap = {task.slug: task for track in Track.tracks for task in track.tasks}
+    trackmap.update({k: v() for k, v in trackmap.items()})
+    taskmap.update(
+        {task.slug: task for track in trackmap.values() for task in track.tasks}
+    )

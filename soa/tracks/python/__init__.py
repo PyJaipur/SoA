@@ -8,6 +8,3 @@ class Python(Track):
         "The basics of python that you'll need to complete the rest of the tracks."
     )
     is_locked = False
-
-
-Track.tracks.append(Python())

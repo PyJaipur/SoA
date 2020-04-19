@@ -103,7 +103,7 @@ def f(q: str, LoginToken):
         tok.token,
         secret=settings.secret,
         max_age=3600 * 24 * 60,
-        **settings.cookie_kwargs
+        **settings.cookie_kwargs,
     )
     return bottle.redirect(app.get_url("get_account"))
 
@@ -118,15 +118,16 @@ def f():
 
 @app.get("/tracks", name="tracks")
 def f():
-    return render("tracks.html", page_title="Tracks", tracks=tracks.Track.tracks)
+    tks = tracks.trackmap.values()
+    return render("tracks.html", page_title="Tracks", tracks=tks)
 
 
 @app.get("/task/<slug>", name="task")
 def f(slug):
-    task = tracks.Track.taskmap.get(slug)
+    task = tracks.taskmap.get(slug)
     if task is None:
         raise bottle.abort(404, "Page not found")
-    track = tracks.Track.trackmap[task.trackslug]
+    track = tracks.trackmap[task.trackslug]
     if track.is_locked:
         raise bottle.abort(404, "Page not found")
     return render("task.html", page_title=track.title, current_task=task, track=track)
@@ -134,14 +135,15 @@ def f(slug):
 
 @app.post("/task/<slug>", name="post_task")
 def f(slug):
-    task = tracks.Track.taskmap.get(slug)
+    task = tracks.taskmap.get(slug)
     if task is None:
         raise bottle.abort(404, "Page not found")
-    track = tracks.Track.trackmap[task.trackslug]
+    track = tracks.trackmap[task.trackslug]
     if track.is_locked:
         raise bottle.abort(404, "Page not found")
     # ---------
-    if not bottle.request.user.has_completed_task(task):
+    # if not bottle.request.user.has_completed_task(task):
+    if True:
         if all(
             [
                 fn(bottle.request.forms.get(value_name))
@@ -151,10 +153,15 @@ def f(slug):
             tp = deepcopy(bottle.request.user.taskprogress)
             tp["done"].append(task.slug)
             bottle.request.user.taskprogress = tp
+            bottle.request.user.task_score = task.score + bottle.request.user.task_score
             bottle.request.session.commit()
-            alert("Good job! You can move on to the next task now.")
+            alert(
+                "Good job! You can move on to the next task now.",
+                title=f"🎉 +{task.score}.",
+                color="success",
+            )
         else:
-            alert("Wrong answer.")
+            alert("Wrong answer.", color="danger")
     return render("task.html", page_title=track.title, current_task=task, track=track,)
 
 
@@ -185,7 +192,7 @@ def f(hsh, User):
     user = bottle.request.session.query(User).filter_by(email_hash=hsh).first()
     if user is None:
         raise bottle.abort(404, "No such page.")
-    return render("certificate.html", user=user, tracks=tracks.Track.tracks)
+    return render("certificate.html", user=user, tracks=tracks.trackmap.values())
 
 
 @app.get("/stats")
