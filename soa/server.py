@@ -142,8 +142,7 @@ def f(slug):
     if track.is_locked:
         raise bottle.abort(404, "Page not found")
     # ---------
-    # if not bottle.request.user.has_completed_task(task):
-    if True:
+    if not bottle.request.user.has_completed_task(task):
         if all(
             [
                 fn(bottle.request.forms.get(value_name))
