@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<form>
+  <ul>
+    <li>
+      <label for='userlist'>
+        <input name='userlist' type='checkbox' {% if userlist %}checked{% endif %}>
+        User list
+      </label>
+    </li>
+  </ul>
+  <input type='submit' value='Refresh'>
+</form>
+<hr>
+{% if userlist %} {% include 'stats/userlist.html' %} {% endif %}
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Progress certificate</h2>
+<b>For: </b>{{ user.username }} {% if user.show_email_on_cert %}&lt;{{ user.email }}&gt;{% endif %}
+<ul>
+  <li>Registered!</li>
+{% for track in tracks %}
+  {% if user.has_completed_track(track) %}
+  <li>
+  {{ track.title }} track completed!
+  </li>
+  {% endif %}
+{% endfor %}
+</ul>
+{% endblock %}

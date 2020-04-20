@@ -1,0 +1,21 @@
+<b>{{ userlist.count() }} total users.</b>
+<table>
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Name</th>
+      <th>Last seen</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in userlist %}
+    <tr>
+      <td>{{ user.score }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.last_seen }}</td>
+      <td>{{ user.email }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

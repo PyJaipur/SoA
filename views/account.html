@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+ <form action='/account' method='POST'>
+   <table>
+     <tbody>
+       <tr> <td>Name</td> <td> <input value='{{ request.user.username|e }}' name='username'> </td> </tr>
+       <tr> <td>Email</td> <td>{{ request.user.email }}</td> </tr>
+     </tbody>
+   </table>
+   <table>
+     <thead>
+       <tr>
+         <th colspan='2'>Certificate settings</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr><td>Link</td><td><a href='/cert/{{ request.user.email_hash }}'>Your certificate</a></td></tr>
+       <tr>
+         <td>Show email</td>
+         <td><input type='checkbox'
+              {% if request.user.show_email_on_cert %}
+              checked
+              {% endif %}
+              name='show_email_on_cert'
+              >
+         </td>
+       </tr>
+     </tbody>
+   </table>
+   <input type='submit' value='Save changes'>
+ </form>
+ <hr>
+ {% if request.user.is_.admin %}
+   <a href='/stats'>Stats</a>
+ {% endif %}
+ {% if request.user.is_.analyst %}
+   <a href='/dbexport'>Database export</a>
+ {% endif %}
+{% endblock %}

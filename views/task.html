@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'crumbs.html' %}
+{{ current_task.html|safe }}
+{% if current_task.gh_issue %}
+<hr>
+<script src="https://utteranc.es/client.js"
+        repo="PyJaipur/Summer-of-Algorithm"
+        issue-number="{{ current_task.gh_issue }}"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+{% endif %}
+{% endblock %}

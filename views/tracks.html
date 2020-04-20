@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+.track{
+  border-bottom: 1px solid #2c8898;
+}
+</style>
+Pick a track!
+<ol>
+{% for track in tracks %}
+  <li class='track'>
+    {% if track.is_locked %}
+      <a href='#'>{{ track.title }} 🔒</a>
+    {% else %}
+      <a href='/task/{{ track.tasks[0].slug }}'>{{ track.title }}</a>
+    {% endif %}
+    <p>{{ track.description }}</p>
+  </li>
+{% endfor %}
+</ol>
+{% endblock %}

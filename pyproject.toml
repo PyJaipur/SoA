@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "soa"
+version = "0.1.0"
+description = ""
+authors = ["arjoonn sharma <arjoonn.94@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+black = "^19.10b0"
+bottle-tools = "^2019.12.22"
+psycopg2-binary = "^2.8.5"
+jinja2 = "^2.11.1"
+sqlalchemy = "^1.3.16"
+requests = "^2.23.0"
+redis = "^3.4.1"
+markdown = "^3.2.1"
+validate_email = "^1.3"
+py3DNS = "^3.2.1"
+lxml = "^4.5.0"
+bs4 = "^0.0.1"
+gevent = "^1.5.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
