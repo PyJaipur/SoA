@@ -209,6 +209,7 @@ def f(User, userlist=False):
 
 
 @app.get("/dbexport")
+@fill_args
 def f(User):
     if not bottle.request.user.is_.analyst:
         raise bottle.abort(404, "No such page.")
