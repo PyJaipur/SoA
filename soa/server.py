@@ -1,6 +1,7 @@
 import bottle
 from copy import deepcopy
 from validate_email import validate_email
+from datetime import datetime
 import requests
 from bottle_tools import fill_args
 from soa import models, plugins, mailer, settings, tracks
@@ -205,3 +206,17 @@ def f(User, userlist=False):
             User.last_seen.desc()
         )
     return render("stats/index.html", **kwargs)
+
+
+@app.get("/dbexport")
+def f(User):
+    if not bottle.request.user.is_.analyst:
+        raise bottle.abort(404, "No such page.")
+    return {
+        "timestamp": str(datetime.now()),
+        "columns": ["id", "taskprogress", "last_seen", "login_score", "task_score"],
+        "data": [
+            (u.id, u.taskprogress, u.last_seen, u.login_score, u.task_score)
+            for u in bottle.request.session.query(User).all()
+        ],
+    }

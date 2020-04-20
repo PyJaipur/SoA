@@ -31,6 +31,9 @@
  </form>
  <hr>
  {% if request.user.is_.admin %}
- <a href='/stats'>Stats</a>
+   <a href='/stats'>Stats</a>
+ {% endif %}
+ {% if request.user.is_.analyst %}
+   <a href='/dbexport'>Database export</a>
  {% endif %}
 {% endblock %}
