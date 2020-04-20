@@ -217,7 +217,7 @@ def f(User):
         "timestamp": str(datetime.now()),
         "columns": ["id", "taskprogress", "last_seen", "login_score", "task_score"],
         "data": [
-            (u.id, u.taskprogress, u.last_seen, u.login_score, u.task_score)
+            (u.id, u.taskprogress, str(u.last_seen), u.login_score, u.task_score)
             for u in bottle.request.session.query(User).all()
         ],
     }
