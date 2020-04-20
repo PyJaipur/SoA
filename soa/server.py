@@ -221,3 +221,24 @@ def f(User):
             for u in bottle.request.session.query(User).all()
         ],
     }
+
+
+@app.get(
+    "/images/<fname>",
+    skip=["auto_session", "login_required", "current_user", "last_login"],
+)
+def return_image_file(fname):
+    return bottle.static_file(fname, root="views/images")
+
+
+@app.get("/error/<code>")
+def errorcode(code):
+    code = int(code)
+    if code == 403:
+        raise bottle.abort(403, "not permitted")
+    if code == 404:
+        raise bottle.abort(404, "not permitted")
+    if code == 429:
+        raise bottle.abort(429, "not permitted")
+    if code == 500:
+        raise bottle.abort(500, "not permitted")
