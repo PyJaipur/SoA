@@ -84,7 +84,7 @@ def f(email: str, LoginToken, User):
     u.ensure_email_hash(bottle.request.session)
     token = LoginToken.loop_create(bottle.request.session, user=u)
     mailer.send_otp(email, token.otp)
-    return bottle.redirect(app.get_url("get_login", otp_sent=True))
+    return bottle.redirect(app.get_url("otp", q=token.otp))
 
 
 @app.get("/otp", skip=["login_required"], name="otp")

@@ -1,5 +1,7 @@
 import argparse
 import logging
+import sys
+print(sys.path)
 from soa import app, settings, models, housekeeping, tracks
 
 if settings.is_dev:
@@ -22,6 +24,6 @@ else:
         "host": "0.0.0.0",
     }
     if settings.is_dev:
-        kwargs.update(dict(debug=True, reloader=True))
+        kwargs.update(dict(debug=True, reloader=False))
     kwargs["server"] = "gevent"
     app.run(**kwargs)
