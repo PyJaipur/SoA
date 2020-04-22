@@ -1,7 +1,5 @@
 import argparse
 import logging
-import sys
-print(sys.path)
 from soa import app, settings, models, housekeeping, tracks
 
 if settings.is_dev:
