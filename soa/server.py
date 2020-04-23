@@ -86,8 +86,6 @@ def f(email: str, LoginToken, User):
     mailer.send_otp(email, token.otp)
     url = app.get_url("otp", q=token.otp) if settings.is_dev else app.get_url("get_login", otp_sent=True)
     return bottle.redirect(url)
-    url = app.get_url("otp", q=token.otp) if settings.is_dev else app.get_url("get_login", otp_sent=True)
-    return bottle.redirect(url)
 
 
 @app.get("/otp", skip=["login_required"], name="otp")
