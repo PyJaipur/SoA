@@ -1,4 +1,5 @@
 from soa.tracks.core import Track
+from soa import settings
 
 
 class Python(Track):
