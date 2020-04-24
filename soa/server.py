@@ -75,7 +75,7 @@ def f(email: str, LoginToken, User):
         User,
         defaults={
             "email": email,
-            "username": "?",
+            "username": "A girl has no name",
             "permissions": [],
             "taskprogress": {"done": []},
         },
@@ -84,7 +84,11 @@ def f(email: str, LoginToken, User):
     u.ensure_email_hash(bottle.request.session)
     token = LoginToken.loop_create(bottle.request.session, user=u)
     mailer.send_otp(email, token.otp)
-    url = app.get_url("otp", q=token.otp) if settings.is_dev else app.get_url("get_login", otp_sent=True)
+    url = (
+        app.get_url("otp", q=token.otp)
+        if settings.is_dev
+        else app.get_url("get_login", otp_sent=True)
+    )
     return bottle.redirect(url)
 
 
