@@ -1,4 +1,6 @@
-# [Summer of Algorithms](https://pyjaipur-soa.herokuapp.com/)
+# Summer of Algorithms
+
+[production](https://pyjaipur-soa.herokuapp.com/) [development](https://pyj-soa-master.herokuapp.com)
  
 PyJaipur "Summer of Algorithms" is a month-ish long program conducted during the summer months of May-June.
 
