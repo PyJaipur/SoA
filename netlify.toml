@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/"
-  to = "https://pyjaipur-soa.herokuapp.com"
-  status = 301
+  from = "/*"
+  to = "https://pyjaipur-soa.herokuapp.com/:splat"
+  status = 200
   force = true
