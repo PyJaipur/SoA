@@ -3,7 +3,12 @@
    <head>
        {% include 'meta.html' %}
       <title>SoA</title>
-      <link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css">
+      <script type="text/javascript">
+        function swapStyleSheet(sheet){
+             document.getElementById('pagestyle').setAttribute('href',sheet);
+        }
+        </script>
+      <link id="pagestyle" rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css" media="screen">
       <style>
         @import url('https://fonts.googleapis.com/css?family=Lato');
         html { font-family: 'Lato', sans-serif; }
@@ -60,6 +65,15 @@
       {% include 'crumbs.html' %}
      {% endif %}
      {% block content %}
+    
      {% endblock %}
-   </body>
+     <p>Here is you theme. </p>
+     <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura-dark.css')">Night style</button>
+
+    <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura-earthly.css')">Earth style</button>
+
+    <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura-vader.css')">Dust style</button>
+
+    <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura.css')">Normal style</button>
+    </body>
 </html>
