@@ -6,46 +6,6 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link id="pagestyle" rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css" media="screen">
-        
-          <!--  Choose theme: 
-            <select>
-                <option selected="selected" value="sakura">Default</option>
-                <option value="sakura-dark">Night</option>
-                <option value="sakura-earthly">Earth</option>
-                <option value="sakura-vader">Vampire</option>
-            </select>
-          -->
-          <!--
-        <script>
-            themeKey = "theme";
-            
-            function switchTheme(themeName) {
-            var name = "sakura";
-            if (themeName == null) {
-              var storedName =   sessionStorage.getItem(themeKey);
-                  if (storedName != null)
-                      name = storedName;
-                   }
-            else {
-                    name = themeName;
-                    sessionStorage.setItem(themeKey, name);
-               }
-              var link =  $("link, [type='text/css']");
-              link.attr("href", "https://unpkg.com/sakura.css/css/"+ name+ ".css");    
-              }
-            
-            
-                var selectElement = $("select");
-                selectElement.change(function() {
-                    $("select option:selected").each(function() {
-                        switchTheme($(this).val());
-                    })
-                });
-            
-                
-        </script>
-
-      -->
         <style>
             @import url('https://fonts.googleapis.com/css?family=Lato');
             html { font-family: 'Lato', sans-serif; }
@@ -82,7 +42,7 @@
     </head>
     <body>
         {% include 'theme.html' %}
-        <script>switchTheme("sakura");</script>
+
         {% if not page_title %}
         <h1>Summer of Algorithms</h1>
         {% else %}
