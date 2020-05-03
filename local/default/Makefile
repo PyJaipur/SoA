@@ -3,7 +3,7 @@ help:
 	echo '======================================'
 	cat README.md
 web:
-	bash -c '(source .dev.env && python -m soa)'
+	bash -c '(source .env && python -m soa)'
 services: database redis
 	docker ps
 export:
