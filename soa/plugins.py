@@ -25,8 +25,13 @@ def within_limits(name, n):
 
 
 def render(template_name, **kwargs):
+    ui_theme = bottle.request.get_cookie("ui_theme", default="sakura")
     kwargs.update(
-        {"request": bottle.request, "alerts": getattr(bottle.request, "alerts", [])}
+        {
+            "request": bottle.request,
+            "alerts": getattr(bottle.request, "alerts", []),
+            "ui_theme": ui_theme,
+        }
     )
     return bottle.jinja2_template(template_name, **kwargs)
 
