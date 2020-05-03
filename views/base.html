@@ -1,34 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-       {% include 'meta.html' %}
-      <title>SoA</title>
-      <script type="text/javascript">
-        function swapStyleSheet(sheet){
-             document.getElementById('pagestyle').setAttribute('href',sheet);
-        }
+    <head>
+        {% include 'meta.html' %}
+        <title>SoA</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <link id="pagestyle" rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css" media="screen">
+        <!--
+            <script type="text/javascript">
+              function swapStyleSheet(sheet){
+                   document.getElementById('pagestyle').setAttribute('href',sheet);
+            
+              -->
+        <p>
+            Choose theme: 
+            <select>
+                <option selected="selected" value="sakura">Default</option>
+                <option value="sakura-dark">Night</option>
+                <option value="sakura-earthly">Earth</option>
+                <option value="sakura-vader">Vampire</option>
+            </select>
+        </p>
+        <script>
+            themeKey = "theme";
+            
+            function switchTheme(themeName) {
+            var name = "sakura";
+            if (themeName == null) {
+              var storedName =   sessionStorage.getItem(themeKey);
+                  if (storedName != null)
+                      name = storedName;
+                   }
+            else {
+                    name = themeName;
+                    sessionStorage.setItem(themeKey, name);
+               }
+              var link =  $("link, [type='text/css']");
+              link.attr("href", "https://unpkg.com/sakura.css/css/"+ name+ ".css");    
+              }
+            
+            
+                var selectElement = $("select");
+                selectElement.change(function() {
+                    $("select option:selected").each(function() {
+                        switchTheme($(this).val());
+                    })
+                });
+            
+                
         </script>
-      <link id="pagestyle" rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css" type="text/css" media="screen">
-      <style>
-        @import url('https://fonts.googleapis.com/css?family=Lato');
-        html { font-family: 'Lato', sans-serif; }
-        {% if alerts %}
-          .alert {
-          padding: 5px;
-          border: 1px solid #2c8898;
-          border-radius: 5px;
-          cursor:pointer;
-          }
-          .info{
-          background-color: #b7dfea;
-          }
-          .success{
-          background-color: #85ffc7;
-          }
-          .danger{
-          background-color: #f4989c;
-          }
-          @media only screen and (min-width: 768px) { 
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Lato');
+            html { font-family: 'Lato', sans-serif; }
+            {% if alerts %}
+            .alert {
+            padding: 5px;
+            border: 1px solid #2c8898;
+            border-radius: 5px;
+            cursor:pointer;
+            }
+            .info{
+            background-color: #b7dfea;
+            }
+            .success{
+            background-color: #85ffc7;
+            }
+            .danger{
+            background-color: #f4989c;
+            }
+            @media only screen and (min-width: 768px) { 
             .alert {
             position: absolute;
             left: 80%;
@@ -39,41 +78,32 @@
             border-radius: 5px;
             cursor:pointer;
             }
-          }
+            }
+            {% endif %}
+        </style>
+    </head>
+    <body>
+        <script>switchTheme(null);</script>
+        {% if not page_title %}
+        <h1>Summer of Algorithms</h1>
+        {% else %}
+        <h1>SoA | {{ page_title }}</h1>
         {% endif %}
-      </style>
-   </head>
-   <body>
-     {% if not page_title %}
-     <h1>Summer of Algorithms</h1>
-     {% else %}
-     <h1>SoA | {{ page_title }}</h1>
-     {% endif %}
-     {% if not request.user.is_.anon %}
-     {{ request.user.username }} ({{ request.user.score }}) |
-     <a href='/account'>Account</a> |
-     <a href='/tracks'>Tracks</a> |
-     <a href='/logout'>Logout</a>
-     {% endif %}
-     <hr>
-     {% for msg in alerts %}
-      {% with title=msg.title, message=msg.message, color=msg.color %}
-      {% include 'alert.html' %}
-      {% endwith %}
-     {% endfor %}
-     {% if crumbs %}
-      {% include 'crumbs.html' %}
-     {% endif %}
-     {% block content %}
-    
-     {% endblock %}
-     <p>Here is you theme. </p>
-     <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura-dark.css')">Night style</button>
-
-    <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura-earthly.css')">Earth style</button>
-
-    <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura-vader.css')">Dust style</button>
-
-    <button onClick="swapStyleSheet('https://unpkg.com/sakura.css/css/sakura.css')">Normal style</button>
-    </body>
+        {% if not request.user.is_.anon %}
+        {{ request.user.username }} ({{ request.user.score }}) |
+        <a href='/account'>Account</a> |
+        <a href='/tracks'>Tracks</a> |
+        <a href='/logout'>Logout</a>
+        {% endif %}
+        <hr>
+        {% for msg in alerts %}
+        {% with title=msg.title, message=msg.message, color=msg.color %}
+        {% include 'alert.html' %}
+        {% endwith %}
+        {% endfor %}
+        {% if crumbs %}
+        {% include 'crumbs.html' %}
+        {% endif %}
+        {% block content %}
+        {% endblock %}
 </html>
