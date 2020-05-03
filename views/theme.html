@@ -1,19 +1,10 @@
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+<link rel="stylesheet" type="text/css" media="screen"
+      href='https://unpkg.com/sakura.css/css/{{ ui_theme }}.css'
+      >
 <script>
-    themeKey = "theme";
-    
     function switchTheme(themeName) {
-    var name = "sakura";
-    if (themeName == "sakura") {
-      var storedName =   sessionStorage.getItem(themeKey);
-          if (storedName != null)
-              name = storedName;
-           }
-
-    else {
-            name = themeName;
-            sessionStorage.setItem(themeKey, name);
-       }
-      var link =  $("link, [type='text/css']");
-      link.attr("href", "https://unpkg.com/sakura.css/css/"+ name+ ".css");    
-      }
+      Cookies.set('ui_theme', themeName);
+      window.location.reload();
+    }
 </script>

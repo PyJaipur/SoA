@@ -1,22 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-Choose Theme: 
-            <select>
-                <option selected="selected" value="sakura">Default</option>
-                <option value="sakura-dark">Night</option>
-                <option value="sakura-earthly">Earth</option>
-                <option value="sakura-vader">Vampire</option>
-            </select>
-
-            <script>
-              var selectElement = $("select");
-              selectElement.change(function() {
-                  $("select option:selected").each(function() {
-                      switchTheme($(this).val());
-                  })
-              });
-          </script>
-          
  <form action='/account' method='POST'>
    <table>
      <tbody>
@@ -53,4 +36,20 @@ Choose Theme:
  {% if request.user.is_.analyst %}
    <a href='/dbexport'>Database export</a>
  {% endif %}
+ <h2>This device</h2>
+<select>
+    <option selected value="sakura">Default</option>
+    <option value="sakura-dark">Night</option>
+    <option value="sakura-earthly">Earth</option>
+    <option value="sakura-vader">Vampire</option>
+</select>
+
+<script>
+  var selectElement = $("select");
+  selectElement.change(function() {
+      $("select option:selected").each(function() {
+          switchTheme($(this).val());
+      })
+  });
+</script>
 {% endblock %}
