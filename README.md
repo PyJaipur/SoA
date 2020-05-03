@@ -17,11 +17,17 @@ git clone https://github.com/<myfork>/Summer-of-Algorithm
 cd Summer-of-Algorithm
 poetry install # Install dependencies
 poetry shell   # Activate virtualenv
+ln -s local/default/Makefile .  # Symlink
+ln -s local/default/env ../env  # Symlink
 make services  # Start postgres + redis servers locally
 make web       # Start webserver on port 8000
 ```
 
 Now you can go to http://localhost:8000 on your browser and see the development server running.
+
+If you need to make changes to the Makefile and env file, please create a
+folder in `local` and put your files there. You can then symlink to those files
+instead of the default files.
 
 ## Codebase layout
 
