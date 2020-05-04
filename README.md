@@ -18,7 +18,7 @@ cd Summer-of-Algorithm
 poetry install # Install dependencies
 poetry shell   # Activate virtualenv
 ln -s local/default/Makefile .  # Symlink
-ln -s local/default/env ../env  # Symlink
+ln -s local/default/.env .env  # Symlink
 make services  # Start postgres + redis servers locally
 make web       # Start webserver on port 8000
 ```
