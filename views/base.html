@@ -1,32 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        {% include 'meta.html' %}
-        <title>SoA</title>
-        
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        {% include 'theme.html' %}
-        <style>
-            @import url('https://fonts.googleapis.com/css?family=Lato');
-            html { font-family: 'Lato', sans-serif; }
-            {% if alerts %}
-            .alert {
-            padding: 5px;
-            border: 1px solid #2c8898;
-            border-radius: 5px;
-            cursor:pointer;
-            }
-            .info{
-            background-color: #b7dfea;
-            }
-            .success{
-            background-color: #85ffc7;
-            }
-            .danger{
-            background-color: #f4989c;
-            }
-            @media only screen and (min-width: 768px) { 
-            .alert {
+  <head>
+    {% include 'meta.html' %}
+    <title>SoA</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    {% include 'theme.html' %}
+    <style>
+      @import url('https://fonts.googleapis.com/css?family=Lato');
+      html { font-family: 'Lato', sans-serif; }
+      {% if alerts %}
+        .alert {
+          padding: 5px;
+          border: 1px solid #2c8898;
+          border-radius: 5px;
+          cursor:pointer;
+        }
+        .info{
+          background-color: #b7dfea;
+        }
+        .success{
+          background-color: #85ffc7;
+        }
+        .danger{
+          background-color: #f4989c;
+        }
+        @media only screen and (min-width: 768px) { 
+          .alert {
             position: absolute;
             left: 80%;
             top: 5%;
@@ -35,32 +34,33 @@
             border: 1px solid #2c8898;
             border-radius: 5px;
             cursor:pointer;
-            }
-            }
-            {% endif %}
-        </style>
-    </head>
-    <body>
-        {% if not page_title %}
-        <h1>Summer of Algorithms</h1>
-        {% else %}
-        <h1>SoA | {{ page_title }}</h1>
-        {% endif %}
-        {% if not request.user.is_.anon %}
-        {{ request.user.username }} ({{ request.user.score }}) |
-        <a href='/account'>Account</a> |
-        <a href='/tracks'>Tracks</a> |
-        <a href='/logout'>Logout</a>
-        {% endif %}
-        <hr>
-        {% for msg in alerts %}
-        {% with title=msg.title, message=msg.message, color=msg.color %}
-        {% include 'alert.html' %}
-        {% endwith %}
-        {% endfor %}
-        {% if crumbs %}
-        {% include 'crumbs.html' %}
-        {% endif %}
-        {% block content %}
-        {% endblock %}
+          }
+        }
+      {% endif %}
+    </style>
+  </head>
+  <body>
+  {% if not page_title %}
+    <h1>Summer of Algorithms</h1>
+  {% else %}
+    <h1>SoA | {{ page_title }}</h1>
+  {% endif %}
+  {% if not request.user.is_.anon %}
+    {{ request.user.username }} ({{ request.user.score }}) |
+    <a href='/account'>Account</a> |
+    <a href='/tracks'>Tracks</a> |
+    <a href='/logout'>Logout</a>
+  {% endif %}
+  <hr>
+  {% for msg in alerts %}
+    {% with title=msg.title, message=msg.message, color=msg.color %}
+      {% include 'alert.html' %}
+    {% endwith %}
+  {% endfor %}
+  {% if crumbs %}
+    {% include 'crumbs.html' %}
+  {% endif %}
+  {% block content %}
+  {% endblock %}
+  </body>
 </html>
