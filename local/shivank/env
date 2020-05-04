@@ -1,0 +1,3 @@
+export DATABASE_URL='postgres://postgres:password@localhost:5431'
+export REDIS_URL='redis://@localhost:6379/0'
+export GMAIL_APP_PASSWORD='xxx'
