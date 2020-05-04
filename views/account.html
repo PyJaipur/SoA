@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+{% block head %}
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script> 
+{% endblock %}
+
 {% block content %}
  <form action='/account' method='POST'>
    <table>
@@ -48,7 +53,8 @@
   var selectElement = $("select");
   selectElement.change(function() {
       $("select option:selected").each(function() {
-          switchTheme($(this).val());
+          Cookies.set('ui_theme', $(this).val());
+          window.location.reload();
       })
   });
 </script>
