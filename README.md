@@ -9,8 +9,18 @@ The aim is to have a place where people can go and learn new skills or practice 
 ## Local setup
 
 1. Make sure you have [docker running on your machine](https://docs.docker.com/get-docker/).
-2. Make sure you have [python poetry](https://python-poetry.org/) running on your machine.
+2. Make sure you have [docker compose](https://docs.docker.com/compose/install/) running on your machine.
 3. Fork this repo and follow the steps below
+
+```bash
+git clone https://github.com/<myfork>/Summer-of-Algorithm
+cd Summer-of-Algorithm
+docker-compose up
+docker-compose down  # to shut down server
+```
+
+If docker compose is not for you, you can go hardcore and install everything manually.
+
 
 ```bash
 git clone https://github.com/<myfork>/Summer-of-Algorithm

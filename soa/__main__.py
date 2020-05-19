@@ -22,6 +22,6 @@ else:
         "host": "0.0.0.0",
     }
     if settings.is_dev:
-        kwargs.update(dict(debug=True, reloader=False))
+        kwargs.update(dict(debug=True, reloader=True))
     kwargs["server"] = "gevent"
     app.run(**kwargs)

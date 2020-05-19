@@ -3,8 +3,7 @@ help:
 	echo '======================================'
 	cat README.md
 web:
-	#bash -c '(source .env && python -m soa)'
-	docker run --rm -v $PWD:/soa -it arjoonn/soa
+	bash -c '(source .env && python -m soa)'
 updatedockerimage:
 	docker build -t soa .
 	docker tag soa arjoonn/soa
