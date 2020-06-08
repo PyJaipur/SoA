@@ -4,6 +4,10 @@ help:
 	cat README.md
 web:
 	bash -c '(source .env && python -m soa)'
+updatedockerimage:
+	docker build -t soa .
+	docker tag soa arjoonn/soa
+	docker push arjoonn/soa
 services: database redis
 	docker ps
 export:

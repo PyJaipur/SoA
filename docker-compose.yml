@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    image: "arjoonn/soa"
+    restart: always
+    volumes:
+        - .:/soa
+    ports:
+        - 8000:8000
+    working_dir: /soa
+    command: python -m soa
+    environment:
+        DATABASE_URL: 'postgres://postgres:password@pgsql:5432'
+        REDIS_URL: 'redis://@redis:6379/0'
+        GMAIL_APP_PASSWORD: 'xxx'
+  redis:
+    image: "redis:alpine"
+  pgsql:
+    image: "postgres:alpine"
+    environment:
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "password"
