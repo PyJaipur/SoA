@@ -4,10 +4,10 @@ services:
     image: "arjoonn/soa"
     restart: always
     volumes:
-        - .:/soa
+        - .:/src
     ports:
         - 8000:8000
-    working_dir: /soa
+    working_dir: /src
     command: python -m soa
     environment:
         DATABASE_URL: 'postgres://postgres:password@pgsql:5432'
@@ -17,6 +17,8 @@ services:
     image: "redis:alpine"
   pgsql:
     image: "postgres:alpine"
+    ports:
+        - 5432:5432
     environment:
         POSTGRES_USER: "postgres"
         POSTGRES_PASSWORD: "password"

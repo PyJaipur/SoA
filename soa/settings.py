@@ -10,6 +10,7 @@ base_domain = env("BASE_DOMAIN")
 # From ENV
 cookie_kwargs = {"path": "/", "domain": base_domain}
 database_url = env("DATABASE_URL")
+print(database_url)
 redis_url = env("REDIS_URL")
 secret = env("BOTTLE_SECRET", "this is no secret")
 gmail_app_pwd = env("GMAIL_APP_PASSWORD")

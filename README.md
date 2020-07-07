@@ -13,8 +13,8 @@ The aim is to have a place where people can go and learn new skills or practice 
 3. Fork this repo and follow the steps below
 
 ```bash
-git clone https://github.com/<myfork>/Summer-of-Algorithm
-cd Summer-of-Algorithm
+git clone https://github.com/<myfork>/SoA
+cd SoA
 docker-compose up
 docker-compose down  # to shut down server
 ```
@@ -23,12 +23,12 @@ If docker compose is not for you, you can go hardcore and install everything man
 
 
 ```bash
-git clone https://github.com/<myfork>/Summer-of-Algorithm
-cd Summer-of-Algorithm
+git clone https://github.com/<myfork>/SoA
+cd SoA
 poetry install # Install dependencies
 poetry shell   # Activate virtualenv
 ln -s local/default/Makefile .  # Symlink
-ln -s local/default/env ../env  # Symlink
+ln -s local/default/env ./env  # Symlink
 make services  # Start postgres + redis servers locally
 make web       # Start webserver on port 8000
 ```
