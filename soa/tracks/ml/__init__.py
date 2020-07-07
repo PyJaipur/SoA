@@ -11,5 +11,5 @@ class ML(Track):
     @property
     def is_locked(self):
         if request.user.is_.track_owner:
-            return True
-        return True if settings.is_dev else False
+            return False
+        return False if settings.is_dev else True
