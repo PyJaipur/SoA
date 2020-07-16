@@ -1,6 +1,6 @@
 import argparse
 import logging
-from soa import app, settings, models, housekeeping, tracks
+from soa import server, settings, models, housekeeping, tracks
 
 if settings.is_dev:
     log = logging.getLogger("soa")
@@ -27,4 +27,4 @@ else:
     if settings.is_dev:
         kwargs.update(dict(debug=True, reloader=False))
     kwargs["server"] = "gevent"
-    app.run(**kwargs)
+    server.app.run(**kwargs)

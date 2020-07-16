@@ -12,7 +12,7 @@ jobs:
       - python/install-deps
       - python/save-cache
       - run:
-          command: DATABASE_URL='sqlite://' python -m soa --test-tracks
+          command: python -m soa --test-tracks
           name: Test track loading
 
 workflows:
