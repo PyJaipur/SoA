@@ -37,6 +37,7 @@ def load_tracks():
         for task in os.listdir(trackpath):
             checking_fns = {}
             if task.endswith("md"):
+                print("Loading", trackpath, task)
                 with open(trackpath / task, "r") as fl:
                     html = markdown.markdown(fl.read())
                 soup = BeautifulSoup(html, "lxml")
