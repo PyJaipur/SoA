@@ -1,6 +1,6 @@
 import argparse
 import logging
-from soa import server, settings, models, housekeeping, tracks
+from soa import settings
 
 if settings.is_dev:
     log = logging.getLogger("soa")
@@ -17,8 +17,12 @@ args = parser.parse_args()
 if args.housekeeping:
     housekeeping.handle(args)
 elif args.test_tracks:
-    tracks.core.load_tracks()
+    from soa.tracks.core import load_tracks
+
+    load_tracks()
 else:
+    from soa import server, models, housekeeping, tracks
+
     tracks.core.load_tracks()
     kwargs = {
         "port": args.port,

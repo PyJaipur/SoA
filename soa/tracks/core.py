@@ -35,6 +35,7 @@ def load_tracks():
         tasks = []
         trackpath = Path("soa") / "tracks" / track.slug
         for task in os.listdir(trackpath):
+            print("Loading", trackpath, task)
             checking_fns = {}
             if task.endswith("md"):
                 with open(trackpath / task, "r") as fl:
