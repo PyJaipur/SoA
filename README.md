@@ -118,6 +118,9 @@ This is the basic filetree for the project. Please refer to the actual filetree 
       ```
     - Any text inside `code` tags with class `code_checker` is used to verify the correct value for the input by the same name as the function.
     - For example here, the value of the input with name `answer` will be passed to the function called `answer` that we have defined.
+    - Once you are done, run `python -m soa --test-tracks` to make sure that your changes are ok. If something fails, your markdown is probably faulty.
+        - Don't add useless spaces/new lines for the python code part.
+        - Don't add spaces at the ends of lines.
 - Add permissions to a user
     - `echo 'user@email.com permission_string' | python -m soa --housekeeping add_perm`
 - Run any housekeeping function
