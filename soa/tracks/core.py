@@ -30,18 +30,25 @@ def load_tracks():
     everytime someone requests a task. Only when they make a submission we
     hit the DB.
     """
-    Task = namedtuple("Task", "slug order md html trackslug checking_fns score")
+    Task = namedtuple("Task", "title slug order md html trackslug checking_fns score")
     for track in trackmap.values():
         tasks = []
         trackpath = Path("soa") / "tracks" / track.slug
+        title = None
         for slug, task in (
             track.tasks_meta.items() if track.tasks_meta is not None else []
         ):
             print("Loading", trackpath, task)
             with open(trackpath / task["md"], "r") as fl:
-                task["html"] = markdown.markdown(fl.read())
+                lines = list(fl.readlines())
+                for line in lines:
+                    if line.strip().startswith("#"):
+                        title = line.strip().lstrip("#")
+                        break
+                task["html"] = markdown.markdown("".join(lines))
             tasks.append(
                 Task(
+                    title,
                     slug,
                     task["order"],
                     task["md"],
