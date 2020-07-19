@@ -17,7 +17,7 @@ class Track:
     description = None
     is_locked = True
     score = 1
-    gh_issue_map = None
+    tasks_meta = None
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
@@ -30,48 +30,25 @@ def load_tracks():
     everytime someone requests a task. Only when they make a submission we
     hit the DB.
     """
-    Task = namedtuple("Task", "slug order html trackslug checking_fns score, gh_issue")
+    Task = namedtuple("Task", "slug order md html trackslug checking_fns score")
     for track in trackmap.values():
         tasks = []
         trackpath = Path("soa") / "tracks" / track.slug
-        for task in os.listdir(trackpath):
-            checking_fns = {}
-            if task.endswith("md"):
-                print("Loading", trackpath, task)
-                with open(trackpath / task, "r") as fl:
-                    html = markdown.markdown(fl.read())
-                soup = BeautifulSoup(html, "lxml")
-                for code in list(soup.findAll("code", attrs={"class": "code_checker"})):
-                    pycode = "\n".join(
-                        [
-                            line
-                            for line in code.decode_contents().split("\n")
-                            if line.strip() != ""
-                        ]
-                    )
-                    pycode = dedent(pycode)
-                    l = {}
-                    exec(pycode, globals(), l)
-                    for k, v in l.items():
-                        checking_fns[k] = v
-                    code.decompose()
-                html = str(
-                    soup
-                )  # No need to tell the participants how the code is checked
-            else:
-                continue
-            order = int(task.split(".")[0])
+        for slug, task in (
+            track.tasks_meta.items() if track.tasks_meta is not None else []
+        ):
+            print("Loading", trackpath, task)
+            with open(trackpath / task["md"], "r") as fl:
+                task["html"] = markdown.markdown(fl.read())
             tasks.append(
                 Task(
-                    f"{track.slug}{order}",
-                    order,
-                    html,
+                    slug,
+                    task["order"],
+                    task["md"],
+                    task["html"],
                     track.slug,
-                    checking_fns,
+                    task["check"],
                     track.score,
-                    None
-                    if track.gh_issue_map is None
-                    else track.gh_issue_map.get(order),
                 )
             )
         tasks = tuple(sorted(tasks, key=lambda x: x.order))
