@@ -86,19 +86,12 @@ This is the basic filetree for the project. Please refer to the actual filetree 
 ## If you want to
 
 - Add a new track
+    - See `soa.tracks.python` for an example of how to set up a track.
     - We assume the track is called 'mytrack' and has 2 tasks in it.
     - Go to `soa/tracks` and create a folder 'mytrack'
-    - Create a file `soa/tracks/mytrack/__init__.py` with contents
-      ```python
-      from soa.tracks.core import Track
-
-      class MyTrack(Track):
-        slug = 'mytrack'
-        title = 'My Track'
-        description = 'Absolutely mine'
-      ```
+    - Create a file `soa/tracks/mytrack/__init__.py` with contents about your track.
     - Create a file `soa/tracks/mytrack/1.md` and put the contents of your first task there.
-    - Create a file `soa/tracks/mytrack/2.md` and put the contents of your first task there.
+    - Create a file `soa/tracks/mytrack/2.md` and put the contents of your second task there.
     - You can add forms in the task markdown files to accept user answers and mark them as done. For example:
       ```md
       ## Adding numbers
@@ -109,18 +102,10 @@ This is the basic filetree for the project. Please refer to the actual filetree 
       <form method='POST'>
         <input name='answer'>
         <input type='submit' value='Submit'>
-        <code class='code_checker'>
-        def answer(s):
-            s =  s.replace(' ', '').strip()
-            return s == '3+4' or s == '4+3'
-        </code>
       </form>
       ```
-    - Any text inside `code` tags with class `code_checker` is used to verify the correct value for the input by the same name as the function.
-    - For example here, the value of the input with name `answer` will be passed to the function called `answer` that we have defined.
+    - The function to verify form answers is assigned to `MyTrack.tasks_meta[<taskslug>]['check']['answer']`.
     - Once you are done, run `python -m soa --test-tracks` to make sure that your changes are ok. If something fails, your markdown is probably faulty.
-        - Don't add useless spaces/new lines for the python code part.
-        - Don't add spaces at the ends of lines.
 - Add permissions to a user
     - `echo 'user@email.com permission_string' | python -m soa --housekeeping add_perm`
 - Run any housekeeping function
