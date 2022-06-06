@@ -11,9 +11,9 @@ beautifulsoup4==4.9.0 \
 black==19.10b0 \
     --hash=sha256:1b30e59be925fafc1ee4565e5e08abef6b03fe455102883820fe5ee2e4734e0b \
     --hash=sha256:c2edb73a08e9e0e6f65a0e6af18b059b8b1cdd5bef997d7a0b181df93dc81539
-bottle==0.12.18 \
-    --hash=sha256:43157254e88f32c6be16f8d9eb1f1d1472396a4e174ebd2bf62544854ecf37e7 \
-    --hash=sha256:0819b74b145a7def225c0e83b16a4d5711fde751cd92bae467a69efce720f69e
+bottle==0.12.20 \
+    --hash=sha256:3c97e1e955c11e4ad2d73a60cdf83c4f4cf7b8b73c8344fc4b72f985432605cb \
+    --hash=sha256:544023cd2cd6d382ebf9675fa0544d4d20e19d3a13b6932a812d099fb2f6cb84
 bottle-tools==2019.12.22 \
     --hash=sha256:47bbbf1b90de8f97db80a13344c2bc9c2d733684d28af24d47feb2d4199f46e1
 bs4==0.0.1 \
